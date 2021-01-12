@@ -5,9 +5,7 @@ import * as ol from 'ol';
 
 
 const MapWrapper = styled.div`
-  max-width: 600px;
-  max-height: 600px;
-  height: 600px;
+  height: 100vh;
   width: 100%;
 
   .ol-control {
