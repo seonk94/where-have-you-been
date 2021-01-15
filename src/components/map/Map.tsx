@@ -7,6 +7,9 @@ import * as ol from 'ol';
 const MapWrapper = styled.div`
   height: 100vh;
   width: 100%;
+  canvas {
+    width: 100%;
+  }
 
   .ol-control {
     position: absolute;
