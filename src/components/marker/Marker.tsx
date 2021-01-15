@@ -34,8 +34,6 @@ function Marker({ geometry, name }: Props) {
       })
     );
 
-    console.log(feature);
-
     const vectorSource = vector({
       features : [feature]
     });
