@@ -1,4 +1,4 @@
-import React, { ReactNode, useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import MapContext from '../map/MapContext';
 import { Map, Overlay } from 'ol';
 import { OverlayTrigger, Popover, Tooltip } from 'react-bootstrap';

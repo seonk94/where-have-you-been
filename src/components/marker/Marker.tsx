@@ -1,11 +1,9 @@
 import React, { useContext, useEffect } from 'react';
 import MapContext from 'src/components/map/MapContext';
-import Select from 'ol/interaction/Select';
-import { Feature, Map } from 'ol';
+import { Feature } from 'ol';
 import Point from 'ol/geom/Point';
 import { fromLonLat } from 'ol/proj';
 import { Icon, Style } from 'ol/style';
-import VectorSource from 'ol/source/Vector';
 import OLVectorLayer from 'ol/layer/Vector';
 import { vector } from 'src/utils';
 interface Props {
