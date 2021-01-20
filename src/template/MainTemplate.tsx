@@ -42,7 +42,7 @@ function MainTemplate() {
 
   return (
     <Container fluid>
-      <Row noGutters>
+      <Row style={{ paddingTop : '12px', paddingBottom : '12px' }}>
         <Col xs={12} md={8}>
           <Map center={fromLonLat(center)} zoom={zoom}>
             <Layers>

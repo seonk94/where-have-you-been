@@ -5,7 +5,7 @@ import * as ol from 'ol';
 
 
 const MapWrapper = styled.div`
-  height: 100vh;
+  height: calc(100vh - 72px);
   width: 100%;
   canvas {
     width: 100%;
