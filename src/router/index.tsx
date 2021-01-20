@@ -1,10 +1,12 @@
 import React, { useContext } from 'react';
 import { Route, Switch } from 'react-router-dom';
+import AppBar from 'src/components/navbar/AppBar';
 import MainTemplate from 'src/template/MainTemplate';
 
 function Root() {
 
   return <>
+    <AppBar/>
     <Switch>
       <Route exact
         path="/"
