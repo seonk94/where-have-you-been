@@ -8,7 +8,7 @@ import { ListItem } from 'src/types';
 interface Props {
   item: ListItem;
 }
-const OLOverlay = ({ item }: Props) => {
+const MarkerOverlay = ({ item }: Props) => {
   const { map } = useContext(MapContext);
   
   useEffect(() => {
@@ -37,4 +37,4 @@ const OLOverlay = ({ item }: Props) => {
     </OverlayTrigger>
   );
 };
-export default OLOverlay;
+export default MarkerOverlay;

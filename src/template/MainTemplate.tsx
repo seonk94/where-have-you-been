@@ -7,10 +7,11 @@ import Controls from 'src/components/controls/Controls';
 import FullScreenControl from 'src/components/controls/FullScreenControl';
 import { osm, vector } from 'src/utils';
 import { Col, Container, Row } from 'react-bootstrap';
-import OLOverlay from 'src/components/overlay/Overlay';
-import RecordListGroup from 'src/components/list/RecordListGroup';
+import MarkerOverlay from 'src/components/overlay/MarkerOverlay';
+import RecordListGroup from 'src/components/Record/RecordListGroup';
 import { ListItem } from 'src/types';
-import { Spacer } from 'src/assets/styles/GlobalStyles';
+import RecordListActionBar from 'src/components/Record/RecordListActionBar';
+import NewMarkerOverlay from 'src/components/overlay/NewMarkerOverlay';
 
 const dummyCoordinate : ListItem[] = [
   {
@@ -50,23 +51,20 @@ function MainTemplate() {
                 source={osm()}
                 zIndex={0}
               />
-              {/* <VectorLayer
-              source={vector({ features : new GeoJSON().readFeatures(geojsonObject, { featureProjection : get('EPSG:3857') }) })}
-              zIndex={0}
-              style={styles.MultiPolygon}
-            /> */}
             </Layers>
             <Controls>
               <FullScreenControl />
             </Controls>
+            <NewMarkerOverlay />
             {
               dummyCoordinate.map((data, index) => (
-                <OLOverlay key={index} item={data}/>
+                <MarkerOverlay key={index} item={data}/>
               ))
             }
           </Map>
         </Col>
         <Col xs={12} md={4}>
+          <RecordListActionBar />
           <RecordListGroup data={dummyCoordinate} setCenter={setCenter}/>
         </Col>
       </Row>
