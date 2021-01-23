@@ -9,6 +9,10 @@ import { toStringHDMS } from 'ol/coordinate';
 import { toLonLat } from 'ol/proj';
 import styled from 'styled-components';
 
+const NewOverlayWrapper = styled.div<{ editMode : boolean}>`
+  display: ${(props) => props.editMode ? 'block' : 'none'};
+`;
+
 const TitleWrapper = styled.div`
   width: 160px;
   padding: 8px 12px;
@@ -25,8 +29,11 @@ const IconButton = styled(Button)`
   padding: 4px;
   margin: 4px;
 `;
+interface Props {
+  editMode: boolean;
+}
 
-const NewMarkerOverlay = () => {
+const NewMarkerOverlay = ({ editMode } : Props) => {
   const { map } = useContext(MapContext);
   const [show, setShow] = useState(true);
 
@@ -51,7 +58,7 @@ const NewMarkerOverlay = () => {
   };
 
   return (
-    <div id="new-overlay">
+    <NewOverlayWrapper editMode={editMode} id="new-overlay">
       {show && <Popover id="popover">
         <TitleWrapper>
           추가하시겠습니까?
@@ -65,7 +72,7 @@ const NewMarkerOverlay = () => {
           </IconButton>
         </ButtonWrapper>
       </Popover>}
-    </div>
+    </NewOverlayWrapper>
   );
 };
 export default NewMarkerOverlay;

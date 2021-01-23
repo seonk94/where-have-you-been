@@ -12,6 +12,7 @@ import RecordListGroup from 'src/components/Record/RecordListGroup';
 import { ListItem } from 'src/types';
 import RecordListActionBar from 'src/components/Record/RecordListActionBar';
 import NewMarkerOverlay from 'src/components/overlay/NewMarkerOverlay';
+import MapAlert from 'src/components/map/MapAlert';
 
 const dummyCoordinate : ListItem[] = [
   {
@@ -40,6 +41,7 @@ const dummyCoordinate : ListItem[] = [
 function MainTemplate() {
   const [center, setCenter] = useState([126.949860, 37.586954]);
   const [zoom, setZoom] = useState(9);
+  const [editMode, setEditMode] = useState(false);
 
   return (
     <Container fluid>
@@ -55,7 +57,8 @@ function MainTemplate() {
             <Controls>
               <FullScreenControl />
             </Controls>
-            <NewMarkerOverlay />
+            <MapAlert editMode={editMode}/>
+            <NewMarkerOverlay  editMode={editMode}/>
             {
               dummyCoordinate.map((data, index) => (
                 <MarkerOverlay key={index} item={data}/>
@@ -64,7 +67,7 @@ function MainTemplate() {
           </Map>
         </Col>
         <Col xs={12} md={4}>
-          <RecordListActionBar />
+          <RecordListActionBar handleAdd={() => setEditMode(true)}/>
           <RecordListGroup data={dummyCoordinate} setCenter={setCenter}/>
         </Col>
       </Row>
