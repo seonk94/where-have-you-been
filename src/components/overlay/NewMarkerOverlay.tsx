@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import MapContext from '../map/MapContext';
 import { Map, Overlay } from 'ol';
 import { Button, ButtonGroup, OverlayTrigger, Popover, Tooltip } from 'react-bootstrap';
@@ -28,6 +28,8 @@ const IconButton = styled(Button)`
 
 const NewMarkerOverlay = () => {
   const { map } = useContext(MapContext);
+  const [show, setShow] = useState(true);
+
   
   useEffect(() => {
     if (!map) return;
@@ -37,26 +39,33 @@ const NewMarkerOverlay = () => {
     (map as Map).addOverlay(overlay);
 
     (map as Map).on('singleclick', (e) => {
+      setShow(true);
       const coordinate = e.coordinate;
       const hdms = toStringHDMS(toLonLat(coordinate));
       overlay.setPosition(coordinate);
     });
-
   }, [map]);
+
+  const handleAdd = () => {
+    setShow(false);
+  };
+
   return (
-    <Popover id="new-overlay">
-      <TitleWrapper>
-        추가하시겠습니까?
-      </TitleWrapper>
-      <ButtonWrapper>
-        <IconButton variant="outline-dark">
-          <Icon type="CloseSmall" theme="filled" size="18"/>
-        </IconButton>
-        <IconButton variant="outline-dark">
-          <Icon type="Check" theme="filled" size="18"/>
-        </IconButton>
-      </ButtonWrapper>
-    </Popover>
+    <div id="new-overlay">
+      {show && <Popover id="popover">
+        <TitleWrapper>
+          추가하시겠습니까?
+        </TitleWrapper>
+        <ButtonWrapper>
+          <IconButton variant="outline-dark" onClick={handleAdd}>
+            <Icon type="CloseSmall" theme="filled" size="18"/>
+          </IconButton>
+          <IconButton variant="outline-dark" onClick={handleAdd}>
+            <Icon type="Check" theme="filled" size="18"/>
+          </IconButton>
+        </ButtonWrapper>
+      </Popover>}
+    </div>
   );
 };
 export default NewMarkerOverlay;
