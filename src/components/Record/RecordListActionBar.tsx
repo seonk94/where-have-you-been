@@ -8,14 +8,11 @@ const Wrapper = styled.div`
   padding-bottom: 24px;
 `;
 
-interface Props {
-  handleAdd: () => void;
-}
 
-function RecordListActionBar({ handleAdd } : Props) {
+function RecordListActionBar() {
   return (
     <Wrapper>
-      <Button onClick={handleAdd}>
+      <Button>
         추가
       </Button>
       <Spacer/>

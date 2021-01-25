@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import AppBar from 'src/components/navbar/AppBar';
-import MainTemplate from 'src/template/MainTemplate';
+import MainTemplate from 'src/template/main/MainTemplate';
 
 function Root() {
 

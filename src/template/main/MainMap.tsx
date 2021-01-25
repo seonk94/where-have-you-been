@@ -5,14 +5,12 @@ import TileLayer from 'src/components/layers/TileLayer';
 import Layers from 'src/components/layers/Layers';
 import Controls from 'src/components/controls/Controls';
 import FullScreenControl from 'src/components/controls/FullScreenControl';
-import { osm, vector } from 'src/utils';
-import { Col, Container, Row } from 'react-bootstrap';
+import { osm } from 'src/utils';
 import MarkerOverlay from 'src/components/overlay/MarkerOverlay';
-import RecordListGroup from 'src/components/Record/RecordListGroup';
 import { ListItem } from 'src/types';
-import RecordListActionBar from 'src/components/Record/RecordListActionBar';
 import NewMarkerOverlay from 'src/components/overlay/NewMarkerOverlay';
 import MapAlert from 'src/components/map/MapAlert';
+
 
 const dummyCoordinate : ListItem[] = [
   {
@@ -38,41 +36,31 @@ const dummyCoordinate : ListItem[] = [
   }
 ];
 
-function MainTemplate() {
+
+function MainMap() {
   const [center, setCenter] = useState([126.949860, 37.586954]);
   const [zoom, setZoom] = useState(9);
-  const [editMode, setEditMode] = useState(false);
 
   return (
-    <Container fluid>
-      <Row style={{ paddingTop : '12px', paddingBottom : '12px' }}>
-        <Col xs={12} md={8}>
-          <Map center={fromLonLat(center)} zoom={zoom}>
-            <Layers>
-              <TileLayer
-                source={osm()}
-                zIndex={0}
-              />
-            </Layers>
-            <Controls>
-              <FullScreenControl />
-            </Controls>
-            <MapAlert editMode={editMode}/>
-            <NewMarkerOverlay  editMode={editMode}/>
-            {
-              dummyCoordinate.map((data, index) => (
-                <MarkerOverlay key={index} item={data}/>
-              ))
-            }
-          </Map>
-        </Col>
-        <Col xs={12} md={4}>
-          <RecordListActionBar handleAdd={() => setEditMode(true)}/>
-          <RecordListGroup data={dummyCoordinate} setCenter={setCenter}/>
-        </Col>
-      </Row>
-    </Container>
+    <Map center={fromLonLat(center)} zoom={zoom}>
+      <Layers>
+        <TileLayer
+          source={osm()}
+          zIndex={0}
+        />
+      </Layers>
+      <Controls>
+        <FullScreenControl />
+      </Controls>
+      <MapAlert show={false}/>
+      <NewMarkerOverlay  show={false}/>
+      {
+        dummyCoordinate.map((data, index) => (
+          <MarkerOverlay key={index} item={data}/>
+        ))
+      }
+    </Map>
   );
 }
 
-export default MainTemplate;
+export default MainMap;

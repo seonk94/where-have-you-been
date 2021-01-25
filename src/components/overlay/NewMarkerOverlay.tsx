@@ -9,8 +9,8 @@ import { toStringHDMS } from 'ol/coordinate';
 import { toLonLat } from 'ol/proj';
 import styled from 'styled-components';
 
-const NewOverlayWrapper = styled.div<{ editMode : boolean}>`
-  display: ${(props) => props.editMode ? 'block' : 'none'};
+const NewOverlayWrapper = styled.div<{ show : boolean}>`
+  display: ${(props) => props.show ? 'block' : 'none'};
 `;
 
 const TitleWrapper = styled.div`
@@ -30,12 +30,12 @@ const IconButton = styled(Button)`
   margin: 4px;
 `;
 interface Props {
-  editMode: boolean;
+  show: boolean;
 }
 
-const NewMarkerOverlay = ({ editMode } : Props) => {
+const NewMarkerOverlay = ({ show } : Props) => {
   const { map } = useContext(MapContext);
-  const [show, setShow] = useState(true);
+  const [showMarker, setShowMarker] = useState(true);
 
   
   useEffect(() => {
@@ -46,7 +46,7 @@ const NewMarkerOverlay = ({ editMode } : Props) => {
     (map as Map).addOverlay(overlay);
 
     (map as Map).on('singleclick', (e) => {
-      setShow(true);
+      setShowMarker(true);
       const coordinate = e.coordinate;
       const hdms = toStringHDMS(toLonLat(coordinate));
       overlay.setPosition(coordinate);
@@ -54,12 +54,12 @@ const NewMarkerOverlay = ({ editMode } : Props) => {
   }, [map]);
 
   const handleAdd = () => {
-    setShow(false);
+    setShowMarker(false);
   };
 
   return (
-    <NewOverlayWrapper editMode={editMode} id="new-overlay">
-      {show && <Popover id="popover">
+    <NewOverlayWrapper show={show} id="new-overlay">
+      {showMarker && <Popover id="popover">
         <TitleWrapper>
           추가하시겠습니까?
         </TitleWrapper>

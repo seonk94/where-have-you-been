@@ -19,11 +19,10 @@ const ListTitle = styled.span`
 
 interface Props {
   item: ListItem;
-  clickHandler: React.Dispatch<React.SetStateAction<number[]>>;
 }
-function RecordListItem({ item, clickHandler } : Props) {
+function RecordListItem({ item } : Props) {
   return (
-    <ListGroup.Item action onClick={() => clickHandler(toLonLat(item.coordinate))}>
+    <ListGroup.Item action >
       <ListRow noGutters>
         <Icon id="ol-popup" size="20" type={item.iconType as IconType} theme="filled" />
         <ListTitle>{item.title}</ListTitle>
