@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Dropdown } from 'react-bootstrap';
 import { Spacer } from 'src/assets/styles/GlobalStyles';
+import { useMainTemplateDispatch } from 'src/template/main/MainProvider';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
@@ -10,9 +11,17 @@ const Wrapper = styled.div`
 
 
 function RecordListActionBar() {
+  const dispatch = useMainTemplateDispatch();
+
+  const handleAddButton = () => {
+    dispatch({
+      type : 'SET_EDIT_MODE',
+      payload : true
+    });
+  };
   return (
     <Wrapper>
-      <Button>
+      <Button onClick={handleAddButton}>
         추가
       </Button>
       <Spacer/>

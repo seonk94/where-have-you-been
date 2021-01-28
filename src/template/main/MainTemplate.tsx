@@ -1,19 +1,6 @@
-import React, { useState, useReducer, createContext, Dispatch, useContext } from 'react';
-import Map from 'src/components/map/Map';
-import { fromLonLat } from 'ol/proj';
-import TileLayer from 'src/components/layers/TileLayer';
-import Layers from 'src/components/layers/Layers';
-import Controls from 'src/components/controls/Controls';
-import FullScreenControl from 'src/components/controls/FullScreenControl';
-import { osm, vector } from 'src/utils';
+import React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
-import MarkerOverlay from 'src/components/overlay/MarkerOverlay';
-import RecordListGroup from 'src/components/Record/RecordListGroup';
-import { ListItem } from 'src/types';
-import RecordListActionBar from 'src/components/Record/RecordListActionBar';
-import NewMarkerOverlay from 'src/components/overlay/NewMarkerOverlay';
-import MapAlert from 'src/components/map/MapAlert';
-import MainProvider, { useMainTemplateState } from './MainProvider';
+import MainProvider from './MainProvider';
 import MainMap from './MainMap';
 import MainListContainer from './MainListContainer';
 

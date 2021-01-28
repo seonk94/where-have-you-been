@@ -8,6 +8,7 @@ import { ListItem } from 'src/types';
 import { toStringHDMS } from 'ol/coordinate';
 import { toLonLat } from 'ol/proj';
 import styled from 'styled-components';
+import { useMainTemplateDispatch } from 'src/template/main/MainProvider';
 
 const NewOverlayWrapper = styled.div<{ show : boolean}>`
   display: ${(props) => props.show ? 'block' : 'none'};
@@ -36,7 +37,7 @@ interface Props {
 const NewMarkerOverlay = ({ show } : Props) => {
   const { map } = useContext(MapContext);
   const [showMarker, setShowMarker] = useState(true);
-
+  const dispatch = useMainTemplateDispatch();
   
   useEffect(() => {
     if (!map) return;
@@ -54,6 +55,10 @@ const NewMarkerOverlay = ({ show } : Props) => {
   }, [map]);
 
   const handleAdd = () => {
+    dispatch({
+      type : 'SET_EDIT_MODE',
+      payload : false
+    });
     setShowMarker(false);
   };
 

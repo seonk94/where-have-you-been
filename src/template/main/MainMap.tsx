@@ -15,7 +15,7 @@ import { useMainTemplateState } from './MainProvider';
 function MainMap() {
   const [center, setCenter] = useState([126.949860, 37.586954]);
   const [zoom, setZoom] = useState(9);
-  const { data } = useMainTemplateState();
+  const { data, editMode } = useMainTemplateState();
 
   return (
     <Map center={fromLonLat(center)} zoom={zoom}>
@@ -28,8 +28,8 @@ function MainMap() {
       <Controls>
         <FullScreenControl />
       </Controls>
-      <MapAlert show={false}/>
-      <NewMarkerOverlay  show={false}/>
+      <MapAlert show={editMode}/>
+      <NewMarkerOverlay  show={editMode}/>
       {
         data.map((item, index) => (
           <MarkerOverlay key={index} item={item}/>
