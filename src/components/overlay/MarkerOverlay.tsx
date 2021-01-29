@@ -1,10 +1,11 @@
 import React, { useContext, useEffect } from 'react';
 import MapContext from '../map/MapContext';
 import { Map, Overlay } from 'ol';
-import { OverlayTrigger, Popover, Tooltip } from 'react-bootstrap';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 // eslint-disable-next-line import/named
 import Icon, { IconType } from '@icon-park/react/es/all';
 import { ListItem } from 'src/types';
+import { Popup } from 'semantic-ui-react';
 interface Props {
   item: ListItem;
 }
@@ -28,13 +29,7 @@ const MarkerOverlay = ({ item }: Props) => {
 
   }, [map]);
   return (
-    <OverlayTrigger placement="top" overlay={
-      <Tooltip id="tooltip">
-        {item.title}
-      </Tooltip>
-    }>
-      <Icon id="ol-popup" type={item.iconType as IconType} theme="filled" />
-    </OverlayTrigger>
+    <Popup content={item.title} size="tiny" position="right center" trigger={<Icon id="ol-popup" type={item.iconType as IconType} theme="filled" />} />
   );
 };
 export default MarkerOverlay;

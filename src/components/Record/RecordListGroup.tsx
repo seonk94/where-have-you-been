@@ -1,5 +1,5 @@
 import React from 'react';
-import { ListGroup } from 'react-bootstrap';
+import { List } from 'semantic-ui-react';
 import { useMainTemplateState } from 'src/template/main/MainProvider';
 import { ListItem } from 'src/types';
 import RecordListItem from './RecordListItem';
@@ -8,11 +8,11 @@ function RecordListGroup() {
   const { data } = useMainTemplateState();
   
   return (
-    <ListGroup as="ul">
+    <List divided verticalAlign="middle" selection>
       {
         data.map((item, index) => <RecordListItem key={index} item={item}/>)
       }
-    </ListGroup>
+    </List>
   );
 }
 

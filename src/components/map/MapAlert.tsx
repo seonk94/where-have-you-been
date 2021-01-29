@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert } from 'react-bootstrap';
+import { Message } from 'semantic-ui-react';
 import styled from 'styled-components';
 
 const AlertWrapper = styled.div<{ show : boolean}>`
@@ -15,9 +15,9 @@ interface Props {
 function MapAlert({ show } : Props) {
   return (
     <AlertWrapper show={show}>
-      <Alert variant='dark'>
+      <Message positive>
         추가할 곳을 선택해주세요.
-      </Alert>
+      </Message>
     </AlertWrapper>
   );
 }

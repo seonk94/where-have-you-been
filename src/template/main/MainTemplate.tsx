@@ -1,23 +1,23 @@
 import React from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
 import MainProvider from './MainProvider';
 import MainMap from './MainMap';
 import MainListContainer from './MainListContainer';
+import { Grid } from 'semantic-ui-react';
 
 function MainTemplate() {
 
   return (
     <MainProvider>
-      <Container fluid>
-        <Row style={{ paddingTop : '12px', paddingBottom : '12px' }}>
-          <Col xs={12} md={8}>
+      <Grid>
+        <Grid.Row>
+          <Grid.Column mobile={16} computer={10}>
             <MainMap/>
-          </Col>
-          <Col xs={12} md={4}>
+          </Grid.Column>
+          <Grid.Column mobile={16} computer={6}>
             <MainListContainer />
-          </Col>
-        </Row>
-      </Container>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
     </MainProvider>
   );
 }

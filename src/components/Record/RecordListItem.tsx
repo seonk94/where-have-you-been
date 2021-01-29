@@ -1,29 +1,24 @@
 import { toLonLat } from 'ol/proj';
 import React from 'react';
-import { Col, ListGroup, Row } from 'react-bootstrap';
 import { ListItem } from 'src/types';
 // eslint-disable-next-line import/named
 import Icon, { IconType } from '@icon-park/react/es/all';
 import styled from 'styled-components';
-import { Spacer } from 'src/assets/styles/GlobalStyles';
+import { List } from 'semantic-ui-react';
 
-const ListRow = styled(Row)`
-  align-items: center;
-`;
-
-const ListTitle = styled.span`
-  padding: 0 4px;
-  font-size: 1.125rem;
-  font-weight: 500;
-`;
 
 interface Props {
   item: ListItem;
 }
 function RecordListItem({ item } : Props) {
   return (
-    <ListGroup.Item action >
-      <ListRow noGutters>
+    <List.Item action >
+      <List.Icon name="home" size="large" verticalAlign="middle" />
+      <List.Content>
+        <List.Header>{item.title}</List.Header>
+        <List.Description>{item.content}</List.Description>
+      </List.Content>
+      {/* <ListRow noGutters>
         <Icon id="ol-popup" size="20" type={item.iconType as IconType} theme="filled" />
         <ListTitle>{item.title}</ListTitle>
         <Spacer />
@@ -33,8 +28,8 @@ function RecordListItem({ item } : Props) {
       </ListRow>
       <div>
         { item.content }
-      </div>
-    </ListGroup.Item>
+      </div> */}
+    </List.Item>
   );
 }
 
