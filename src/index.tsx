@@ -4,7 +4,6 @@ import * as serviceWorker from './serviceWorker';
 import Root from './router';
 import { BrowserRouter } from 'react-router-dom';
 import { GlobalStyle } from './assets/styles/GlobalStyles';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import '@icon-park/react/styles/index.css';
 import 'semantic-ui-css/semantic.min.css';
 
