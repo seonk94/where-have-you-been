@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import MapContext from '../map/MapContext';
 import { Map, Overlay } from 'ol';
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 // eslint-disable-next-line import/named
 import Icon, { IconType } from '@icon-park/react/es/all';
 import { ListItem } from 'src/types';

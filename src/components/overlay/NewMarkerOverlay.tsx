@@ -1,14 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
 import MapContext from '../map/MapContext';
 import { Map, Overlay } from 'ol';
-import { Button, ButtonGroup, OverlayTrigger, Popover, Tooltip } from 'react-bootstrap';
-// eslint-disable-next-line import/named
-import Icon, { IconType } from '@icon-park/react/es/all';
 import { ListItem } from 'src/types';
 import { toStringHDMS } from 'ol/coordinate';
 import { toLonLat } from 'ol/proj';
 import styled from 'styled-components';
 import { useMainTemplateDispatch } from 'src/template/main/MainProvider';
+import RecordAddModal from '../Record/RecordAddModal';
+import { Button, Icon } from 'semantic-ui-react';
 
 const NewOverlayWrapper = styled.div<{ show : boolean}>`
   display: ${(props) => props.show ? 'block' : 'none'};
@@ -24,12 +23,51 @@ const ButtonWrapper = styled.div`
   justify-content: flex-end;
 `;
 
-const IconButton = styled(Button)`
-  align-items: center;
-  display: flex;
+
+const CardWrapper = styled.div`
+  margin-left: 5px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1060;
+  display: block;
+  background: #fff;
   padding: 4px;
-  margin: 4px;
 `;
+
+const ArrowDiv = styled.div`
+  position: absolute;
+  display: block;
+  left: calc(-.5rem - 1px);
+  width: .5rem;
+  height: 1rem;
+  margin: .3rem 0;
+
+  &::after {
+    position: absolute;
+    display: block;
+    content: "";
+    border-color: transparent;
+    border-style: solid;
+
+    left: 1px;
+    border-width: .5rem .5rem .5rem 0;
+    border-right-color: #fff;
+  }
+
+  *::before {
+    position: absolute;
+    display: block;
+    content: "";
+    border-color: transparent;
+    border-style: solid;
+
+    left: 0;
+    border-width: .5rem .5rem .5rem 0;
+    border-right-color: rgba(0, 0, 0, .25);
+  }
+`;
+
 interface Props {
   show: boolean;
 }
@@ -64,20 +102,22 @@ const NewMarkerOverlay = ({ show } : Props) => {
 
   return (
     <NewOverlayWrapper show={show} id="new-overlay">
-      {showMarker && <Popover id="popover">
+      {showMarker && <CardWrapper id="popover">
+        <ArrowDiv/>
         <TitleWrapper>
           추가하시겠습니까?
         </TitleWrapper>
         <ButtonWrapper>
-          <IconButton variant="outline-dark" onClick={handleAdd}>
-            <Icon type="CloseSmall" theme="filled" size="18"/>
-          </IconButton>
-          <IconButton variant="outline-dark" onClick={handleAdd}>
-            <Icon type="Check" theme="filled" size="18"/>
-          </IconButton>
+          <Button icon>
+            <Icon name="close" />
+          </Button>
+          <Button icon>
+            <Icon name="check" />
+          </Button>
         </ButtonWrapper>
-      </Popover>}
+      </CardWrapper>}
     </NewOverlayWrapper>
   );
 };
 export default NewMarkerOverlay;
+
