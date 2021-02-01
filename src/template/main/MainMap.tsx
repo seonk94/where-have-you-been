@@ -13,12 +13,10 @@ import MapAlert from 'src/components/map/MapAlert';
 import { useMainTemplateState } from './MainProvider';
 
 function MainMap() {
-  const [center, setCenter] = useState([126.949860, 37.586954]);
-  const [zoom, setZoom] = useState(9);
-  const { data, editMode } = useMainTemplateState();
+  const { center, data, editMode } = useMainTemplateState();
 
   return (
-    <Map center={fromLonLat(center)} zoom={zoom}>
+    <Map center={fromLonLat(center)} zoom={9}>
       <Layers>
         <TileLayer
           source={osm()}

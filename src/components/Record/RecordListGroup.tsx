@@ -1,7 +1,6 @@
 import React from 'react';
 import { List } from 'semantic-ui-react';
 import { useMainTemplateState } from 'src/template/main/MainProvider';
-import { ListItem } from 'src/types';
 import RecordListItem from './RecordListItem';
 
 function RecordListGroup() {
@@ -10,7 +9,7 @@ function RecordListGroup() {
   return (
     <List divided verticalAlign="middle" selection>
       {
-        data.map((item, index) => <RecordListItem key={index} item={item}/>)
+        data.map((item, index) => <RecordListItem key={index} item={item} />)
       }
     </List>
   );
