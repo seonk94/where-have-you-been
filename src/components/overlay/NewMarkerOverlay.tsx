@@ -75,6 +75,7 @@ interface Props {
 const NewMarkerOverlay = ({ show } : Props) => {
   const { map } = useContext(MapContext);
   const [showMarker, setShowMarker] = useState(true);
+  const [showAddModal, setShowAddModal] = useState(false);
   const dispatch = useMainTemplateDispatch();
   
   useEffect(() => {
@@ -98,25 +99,29 @@ const NewMarkerOverlay = ({ show } : Props) => {
       payload : false
     });
     setShowMarker(false);
+    setShowAddModal(true);
   };
 
   return (
-    <NewOverlayWrapper show={show} id="new-overlay">
-      {showMarker && <CardWrapper id="popover">
-        <ArrowDiv/>
-        <TitleWrapper>
-          추가하시겠습니까?
-        </TitleWrapper>
-        <ButtonWrapper>
-          <Button icon>
-            <Icon name="close" />
-          </Button>
-          <Button icon>
-            <Icon name="check" />
-          </Button>
-        </ButtonWrapper>
-      </CardWrapper>}
-    </NewOverlayWrapper>
+    <>
+      <NewOverlayWrapper show={show} id="new-overlay">
+        {showMarker && <CardWrapper id="popover">
+          <ArrowDiv/>
+          <TitleWrapper>
+            추가하시겠습니까?
+          </TitleWrapper>
+          <ButtonWrapper>
+            <Button icon>
+              <Icon name="close" />
+            </Button>
+            <Button icon onClick={handleAdd}>
+              <Icon name="check" />
+            </Button>
+          </ButtonWrapper>
+        </CardWrapper>}
+      </NewOverlayWrapper>
+      <RecordAddModal show={showAddModal}/>
+    </>
   );
 };
 export default NewMarkerOverlay;
