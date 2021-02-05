@@ -5,7 +5,7 @@ import TileLayer from 'src/components/layers/TileLayer';
 import Layers from 'src/components/layers/Layers';
 import Controls from 'src/components/controls/Controls';
 import FullScreenControl from 'src/components/controls/FullScreenControl';
-import { osm } from 'src/utils';
+import { osm } from 'src/lib/utils';
 import MarkerOverlay from 'src/components/overlay/MarkerOverlay';
 import { ListItem } from 'src/types';
 import NewMarkerOverlay from 'src/components/overlay/NewMarkerOverlay';
