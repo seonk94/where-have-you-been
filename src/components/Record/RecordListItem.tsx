@@ -19,7 +19,7 @@ function RecordListItem({ item } : Props) {
   };
   return (
     <List.Item onClick={handleClick}>
-      <List.Icon name="home" size="large" verticalAlign="middle" />
+      <List.Icon name={item.iconType} size="large" verticalAlign="middle" />
       <List.Content>
         <List.Header>{item.title}</List.Header>
         <List.Description>{item.content}</List.Description>

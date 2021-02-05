@@ -72,7 +72,7 @@ function MainProvider({ children } : Props) {
         coordinate : [14138144.412188971, 4508760.443846234],
         content : '강남에서...',
         title : '강남',
-        iconType : 'BuildingTwo',
+        iconType : 'home',
         date : '2021-01-01'
       },
       {
@@ -80,7 +80,7 @@ function MainProvider({ children } : Props) {
         coordinate : [14134951.264779307, 4520037.752975805],
         content : '경복궁에서...',
         title : '경복궁',
-        iconType : 'Palace',
+        iconType : 'cut',
         date : '2021-01-01'
       },
       {
@@ -88,7 +88,7 @@ function MainProvider({ children } : Props) {
         coordinate : [14074875.764536034, 4503258.59338613],
         content : '인천공항에서... 어쩌구 저쩌구 ',
         title : '인천공항',
-        iconType : 'Aviation',
+        iconType : 'eye',
         date : '2021-01-01'
       }
     ]
