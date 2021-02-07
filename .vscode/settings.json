@@ -1,3 +1,11 @@
 {
-  "editor.formatOnSave": false
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "[javascript, typescript]": {
+    "editor.formatOnSave": true
+  },
+  "editor.codeActionsOnSave": {
+    // For ESLint
+    "source.fixAll.eslint": true
+  },
 }
