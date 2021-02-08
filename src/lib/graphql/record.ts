@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 import { SemanticICONS } from 'semantic-ui-react';
 
 export type Record = {
-    id: number;
+    _id: number;
     coordinate: number[];
     title: string;
     content: string;
@@ -13,18 +13,18 @@ export type Record = {
 };
 
 export const GET_RECORDS = gql`
-    query AllRecords {
-        allRecords {
-        data {
-            title
-            content
-            iconType
-            date
-            userId
-            coordinate
-            }
-        }
+  query AllRecords {
+    allRecords {
+    data {
+      title
+      content
+      iconType
+      date
+      userId
+      coordinate
+      }
     }
+  }
 `;
 
 export const GET_RECORDS_BY_USERID = gql`
@@ -42,17 +42,44 @@ export const GET_RECORDS_BY_USERID = gql`
   }
 `;
 
-// export type GetTagsResponse = {
-//   tags: Tag[];
-// };
+export const CREATE_RECORD = gql`
+  mutation CreateRecord(
+    $title: String!,
+    $content: String!,
+    $iconType: String!,
+    $date: String!,
+    $userId: ID!,
+    $coordinate: [Int]!
+  ) {
+    createRecord(
+      data: {
+        title: $title,
+        content: $content,
+        iconType: $iconType,
+        date: $date,
+        userId: $userId,
+        coordinate: $coordinate
+      }
+    ) {
+      _id
+      title
+      content
+      iconType
+      date
+      coordinate
+      userId
+    }
+  }
+`;
 
-// export type GetUserTagsResponse = {
-//   userTags: {
-//     tags: Tag[];
-//     posts_count: number;
-//   };
-// };
-
-// export type GetTagResponse = {
-//   tag: Tag;
-// };
+export type CreateRecordResponse = {
+  createRecord: {
+    _id: number;
+    title: string;
+    content: string;
+    iconType: string;
+    date: string;
+    coordinate: number[];
+    userId: number;
+  };
+};
