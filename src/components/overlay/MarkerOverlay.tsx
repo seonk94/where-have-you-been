@@ -1,10 +1,10 @@
 import React, { useContext, useEffect } from 'react';
 import MapContext from '../map/MapContext';
 import { Map, Overlay } from 'ol';
-import { ListItem } from 'src/types';
 import { Icon, Popup } from 'semantic-ui-react';
+import { Record } from 'src/lib/graphql/record';
 interface Props {
-  item: ListItem;
+  item: Record;
 }
 const MarkerOverlay = ({ item }: Props) => {
   const { map } = useContext(MapContext);

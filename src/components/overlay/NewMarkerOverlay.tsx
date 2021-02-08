@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import MapContext from '../map/MapContext';
 import { Map, Overlay } from 'ol';
-import { ListItem } from 'src/types';
 import { toStringHDMS } from 'ol/coordinate';
 import { toLonLat } from 'ol/proj';
 import styled from 'styled-components';

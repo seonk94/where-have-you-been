@@ -1,12 +1,12 @@
 import { toLonLat } from 'ol/proj';
 import React from 'react';
-import { ListItem } from 'src/types';
 import { List } from 'semantic-ui-react';
 import { useMainTemplateDispatch } from 'src/template/main/MainProvider';
+import { Record } from 'src/lib/graphql/record';
 
 
 interface Props {
-  item: ListItem;
+  item: Record;
 }
 function RecordListItem({ item } : Props) {
   const dispatch = useMainTemplateDispatch();

@@ -7,7 +7,6 @@ import Controls from 'src/components/controls/Controls';
 import FullScreenControl from 'src/components/controls/FullScreenControl';
 import { osm } from 'src/lib/utils';
 import MarkerOverlay from 'src/components/overlay/MarkerOverlay';
-import { ListItem } from 'src/types';
 import NewMarkerOverlay from 'src/components/overlay/NewMarkerOverlay';
 import MapAlert from 'src/components/map/MapAlert';
 import { useMainTemplateState } from './MainProvider';

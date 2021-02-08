@@ -1,15 +1,15 @@
 import React, { useState, useReducer, createContext, Dispatch, useContext } from 'react';
-import { ListItem } from 'src/types';
+import { Record } from 'src/lib/graphql/record';
 
 type SetCenter = { type: 'SET_CENTER', payload: number[] };
 type SetEditMode = { type: 'SET_EDIT_MODE', payload: boolean };
-type AddData = { type: 'ADD_DATA', payload: ListItem };
-type DeleteData = { type: 'DELETE_DATA', payload: ListItem };
+type AddData = { type: 'ADD_DATA', payload: Record };
+type DeleteData = { type: 'DELETE_DATA', payload: Record };
 type Action = SetEditMode | AddData | DeleteData | SetCenter;
 type MainTemplateState = {
   editMode: boolean;
   center: number[];
-  data: ListItem[]
+  data: Record[]
 };
 
 const MainTemplateStateContext = createContext<MainTemplateState | null>(null);
@@ -35,7 +35,7 @@ function reducer(state: MainTemplateState, action: Action): MainTemplateState {
   case 'DELETE_DATA':
     return {
       ...state,
-      data : state.data.filter(item => item.id !== action.payload.id)
+      data : state.data.filter(item => item._id !== action.payload._id)
     };
   default:
     throw new Error(`Unhandled action type`);
@@ -68,28 +68,31 @@ function MainProvider({ children } : Props) {
     center : [126.949860, 37.586954],
     data : [
       {
-        id : 1,
+        _id : 1,
         coordinate : [14138144.412188971, 4508760.443846234],
         content : '강남에서...',
         title : '강남',
         iconType : 'home',
-        date : '2021-01-01'
+        date : '2021-01-01',
+        userId : 1
       },
       {
-        id : 2,
+        _id : 2,
         coordinate : [14134951.264779307, 4520037.752975805],
         content : '경복궁에서...',
         title : '경복궁',
         iconType : 'cut',
-        date : '2021-01-01'
+        date : '2021-01-01',
+        userId : 1
       },
       {
-        id : 3,
+        _id : 3,
         coordinate : [14074875.764536034, 4503258.59338613],
         content : '인천공항에서... 어쩌구 저쩌구 ',
         title : '인천공항',
         iconType : 'eye',
-        date : '2021-01-01'
+        date : '2021-01-01',
+        userId : 1
       }
     ]
   });
