@@ -27,6 +27,13 @@ export const GET_RECORDS = gql`
   }
 `;
 
+
+export type GetRecordsResponse = {
+  allRecords: {
+    data: Record[]
+  };
+};
+
 export const GET_RECORDS_BY_USERID = gql`
   query RecordsByUserId($userId: ID) {
     recordsByUserId(userId: $userId) {
@@ -49,7 +56,7 @@ export const CREATE_RECORD = gql`
     $iconType: String!,
     $date: String!,
     $userId: ID!,
-    $coordinate: [Int]!
+    $coordinate: [Float]!
   ) {
     createRecord(
       data: {
