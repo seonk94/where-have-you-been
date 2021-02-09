@@ -29,7 +29,6 @@ function RecordAddModal({ show }: Props) {
           userId : 1
         }
       });
-      console.log(res.data?.createRecord);
       const createRecordData = res.data?.createRecord;
       if (!createRecordData) throw Error('Create Record Error');
       dispatch({
