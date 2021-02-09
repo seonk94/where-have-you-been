@@ -3,15 +3,9 @@ import MainProvider from './MainProvider';
 import MainMap from './MainMap';
 import MainListContainer from './MainListContainer';
 import { Grid } from 'semantic-ui-react';
-import { useQuery } from '@apollo/client';
-import { GET_RECORDS } from 'src/lib/graphql/record';
 
 function MainTemplate() {
-  const { data, loading } = useQuery(GET_RECORDS);
 
-  useEffect(() => {
-    console.log(data);
-  }, []);
   return (
     <MainProvider>
       <Grid>
