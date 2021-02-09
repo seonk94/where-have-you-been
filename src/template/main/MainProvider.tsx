@@ -1,11 +1,13 @@
-import React, { useState, useReducer, createContext, Dispatch, useContext } from 'react';
-import { Record } from 'src/lib/graphql/record';
+import { useQuery } from '@apollo/client';
+import React, { useState, useReducer, createContext, Dispatch, useContext, useEffect } from 'react';
+import { GetRecordsResponse, GET_RECORDS, Record } from 'src/lib/graphql/record';
 
 type SetCenter = { type: 'SET_CENTER', payload: number[] };
 type SetEditMode = { type: 'SET_EDIT_MODE', payload: boolean };
 type AddData = { type: 'ADD_DATA', payload: Record };
+type InitData = { type: 'INIT_DATA', payload: Record[] };
 type DeleteData = { type: 'DELETE_DATA', payload: Record };
-type Action = SetEditMode | AddData | DeleteData | SetCenter;
+type Action = SetEditMode | AddData | DeleteData | SetCenter | InitData;
 type MainTemplateState = {
   editMode: boolean;
   center: number[];
@@ -26,6 +28,11 @@ function reducer(state: MainTemplateState, action: Action): MainTemplateState {
     return {
       ...state,
       editMode : action.payload
+    };
+  case 'INIT_DATA':
+    return {
+      ...state,
+      data : action.payload
     };
   case 'ADD_DATA':
     return {
@@ -66,37 +73,18 @@ function MainProvider({ children } : Props) {
   const [state, dispatch] = useReducer(reducer, {
     editMode : false,
     center : [126.949860, 37.586954],
-    data : [
-      {
-        _id : 1,
-        coordinate : [14138144.412188971, 4508760.443846234],
-        content : '강남에서...',
-        title : '강남',
-        iconType : 'home',
-        date : '2021-01-01',
-        userId : 1
-      },
-      {
-        _id : 2,
-        coordinate : [14134951.264779307, 4520037.752975805],
-        content : '경복궁에서...',
-        title : '경복궁',
-        iconType : 'cut',
-        date : '2021-01-01',
-        userId : 1
-      },
-      {
-        _id : 3,
-        coordinate : [14074875.764536034, 4503258.59338613],
-        content : '인천공항에서... 어쩌구 저쩌구 ',
-        title : '인천공항',
-        iconType : 'eye',
-        date : '2021-01-01',
-        userId : 1
-      }
-    ]
+    data : []
   });
 
+  const { data, loading } = useQuery<GetRecordsResponse>(GET_RECORDS);
+  useEffect(() => {
+    if (!loading && data) {
+      dispatch({
+        type : 'INIT_DATA',
+        payload : data.allRecords.data
+      });
+    }
+  }, [loading]);
   return (
     <MainTemplateStateContext.Provider value={state}>
       <MainTemplateDispatchContext.Provider value={dispatch}>
