@@ -75,6 +75,7 @@ const NewMarkerOverlay = ({ show } : Props) => {
   const { map } = useContext(MapContext);
   const [showMarker, setShowMarker] = useState(true);
   const [showAddModal, setShowAddModal] = useState(false);
+  let coordinate : number[] = [];
   const dispatch = useMainTemplateDispatch();
   
   useEffect(() => {
@@ -86,7 +87,7 @@ const NewMarkerOverlay = ({ show } : Props) => {
 
     (map as Map).on('singleclick', (e) => {
       setShowMarker(true);
-      const coordinate = e.coordinate;
+      coordinate = e.coordinate;
       const hdms = toStringHDMS(toLonLat(coordinate));
       overlay.setPosition(coordinate);
     });
@@ -119,7 +120,7 @@ const NewMarkerOverlay = ({ show } : Props) => {
           </ButtonWrapper>
         </CardWrapper>}
       </NewOverlayWrapper>
-      <RecordAddModal show={showAddModal}/>
+      <RecordAddModal coordinate={coordinate} show={showAddModal} closeFunction={() => setShowAddModal(false)}/>
     </>
   );
 };

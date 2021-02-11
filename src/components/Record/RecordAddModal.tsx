@@ -7,9 +7,11 @@ import useInputs from 'src/lib/hooks/useInputs';
 import { useMainTemplateDispatch } from 'src/template/main/MainProvider';
 
 interface Props {
+  closeFunction: () => void;
   show: boolean;
+  coordinate: number[]
 }
-function RecordAddModal({ show }: Props) {
+function RecordAddModal({ show, coordinate, closeFunction }: Props) {
   const dispatch = useMainTemplateDispatch();
   const [form, onChange] = useInputs({
     title : '',
@@ -25,7 +27,7 @@ function RecordAddModal({ show }: Props) {
           title : form.title,
           content : form.content,
           iconType : iconType,
-          coordinate : [123124, 123124],
+          coordinate : coordinate,
           userId : 1
         }
       });
@@ -37,6 +39,7 @@ function RecordAddModal({ show }: Props) {
           ...createRecordData
         } as Record
       });
+      closeFunction();
     } catch(e) {
       console.error(e);
     }
