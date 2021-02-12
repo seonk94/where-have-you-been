@@ -75,23 +75,29 @@ const NewMarkerOverlay = ({ show } : Props) => {
   const { map } = useContext(MapContext);
   const [showMarker, setShowMarker] = useState(true);
   const [showAddModal, setShowAddModal] = useState(false);
-  let coordinate : number[] = [];
+  const [overlay, setOverlay] = useState<null | Overlay>(null);
   const dispatch = useMainTemplateDispatch();
   
   useEffect(() => {
-    if (!map) return;
-    const overlay = new Overlay({
+    setOverlay(new Overlay({
       element : document.getElementById('new-overlay') as HTMLElement
-    });
+    }));
+  }, []);
+
+  useEffect(() => {
+    console.log(overlay);
+    if (!map) return;
+    if (!overlay) return;
     (map as Map).addOverlay(overlay);
 
     (map as Map).on('singleclick', (e) => {
+      console.log(overlay);
+      if (!overlay) return;
       setShowMarker(true);
-      coordinate = e.coordinate;
-      const hdms = toStringHDMS(toLonLat(coordinate));
-      overlay.setPosition(coordinate);
+      overlay.setPosition(e.coordinate);
     });
-  }, [map]);
+  }, [map, overlay]);
+
 
   const handleAdd = () => {
     dispatch({
@@ -120,7 +126,13 @@ const NewMarkerOverlay = ({ show } : Props) => {
           </ButtonWrapper>
         </CardWrapper>}
       </NewOverlayWrapper>
-      <RecordAddModal coordinate={coordinate} show={showAddModal} closeFunction={() => setShowAddModal(false)}/>
+      {
+        showAddModal &&
+        <RecordAddModal 
+          coordinate={(overlay as Overlay & { values_ : { position: number[] }}).values_.position} 
+          show={showAddModal} 
+          closeFunction={() => setShowAddModal(false)}/>
+      }
     </>
   );
 };
