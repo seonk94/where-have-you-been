@@ -1,8 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import MapContext from '../map/MapContext';
 import { Map, Overlay } from 'ol';
-import { toStringHDMS } from 'ol/coordinate';
-import { toLonLat } from 'ol/proj';
 import styled from 'styled-components';
 import { useMainTemplateDispatch } from 'src/template/main/MainProvider';
 import RecordAddModal from '../Record/RecordAddModal';
@@ -85,13 +83,11 @@ const NewMarkerOverlay = ({ show } : Props) => {
   }, []);
 
   useEffect(() => {
-    console.log(overlay);
     if (!map) return;
     if (!overlay) return;
     (map as Map).addOverlay(overlay);
 
     (map as Map).on('singleclick', (e) => {
-      console.log(overlay);
       if (!overlay) return;
       setShowMarker(true);
       overlay.setPosition(e.coordinate);

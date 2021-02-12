@@ -16,8 +16,6 @@ const MarkerOverlay = ({ item }: Props) => {
     });
     (map as Map).addOverlay(overlay);
     overlay.setPosition(item.coordinate);
-
-
   }, [map]);
   return (
     <Popup 
