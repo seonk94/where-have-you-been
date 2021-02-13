@@ -16,6 +16,7 @@ export const GET_RECORDS = gql`
   query AllRecords {
     allRecords {
     data {
+      _id
       title
       content
       iconType
@@ -38,6 +39,7 @@ export const GET_RECORDS_BY_USERID = gql`
   query RecordsByUserId($userId: ID) {
     recordsByUserId(userId: $userId) {
       data {
+        _id
         title
         content
         iconType
@@ -90,3 +92,11 @@ export type CreateRecordResponse = {
     userId: number;
   };
 };
+
+export const DELETE_RECORD = gql`
+  mutation DeleteRecord($id: ID!) {
+    deleteRecord(id: $id) {
+      _id
+    }
+  }
+`;
