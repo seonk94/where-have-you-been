@@ -7,7 +7,7 @@ function RecordListGroup() {
   const { data } = useMainTemplateState();
   
   return (
-    <List divided verticalAlign="middle" selection>
+    <List verticalAlign="middle" selection size="large">
       {
         data.map((item, index) => <RecordListItem key={index} item={item} />)
       }

@@ -3,12 +3,17 @@ import MainProvider from './MainProvider';
 import MainMap from './MainMap';
 import MainListContainer from './MainListContainer';
 import { Grid } from 'semantic-ui-react';
+import styled from 'styled-components';
+
+const Container = styled(Grid)`
+  margin: 0 !important;
+`;
 
 function MainTemplate() {
 
   return (
     <MainProvider>
-      <Grid>
+      <Container>
         <Grid.Row>
           <Grid.Column mobile={16} computer={10}>
             <MainMap/>
@@ -17,7 +22,7 @@ function MainTemplate() {
             <MainListContainer />
           </Grid.Column>
         </Grid.Row>
-      </Grid>
+      </Container>
     </MainProvider>
   );
 }
