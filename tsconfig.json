@@ -21,6 +21,7 @@
     "jsx": "react-jsx",
     "noFallthroughCasesInSwitch": true
   },
+  "typeRoots": ["./src/types", "./node_modules/@types"],
   "include": [
     "src",
     "map"
