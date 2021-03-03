@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import AppBar from 'src/components/navbar/AppBar';
-import MainTemplate from 'src/template/main/MainTemplate';
+import main from 'src/pages/main';
 
 function Root() {
 
@@ -10,7 +10,7 @@ function Root() {
     <Switch>
       <Route exact
         path="/"
-        component={MainTemplate} />
+        component={main} />
     </Switch>
   </>;
 }
