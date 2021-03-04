@@ -1,13 +1,12 @@
 import gql from 'graphql-tag';
 // eslint-disable-next-line import/named
-import { SemanticICONS } from 'semantic-ui-react';
 
 export type Record = {
     _id: number;
     coordinate: number[];
     title: string;
     content: string;
-    iconType: SemanticICONS;
+    iconType: string;
     date: string;
     userId: number;
 };

@@ -3,8 +3,8 @@ import MapContext from 'src/components/maps/MapProvider';
 import styled from 'styled-components';
 
 const MapContainer = styled.div`
-  width: 100vw;
-  height: calc(100vh - 48px);
+  width: 100%;
+  height: calc(100vh - 49px);
 `;
 
 function main() {

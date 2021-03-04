@@ -4,7 +4,6 @@ import * as serviceWorker from './serviceWorker';
 import Root from './router';
 import { BrowserRouter } from 'react-router-dom';
 import { GlobalStyle } from './assets/styles/GlobalStyles';
-import 'semantic-ui-css/semantic.min.css';
 import { ApolloProvider } from '@apollo/client';
 import { client } from './client';
 
