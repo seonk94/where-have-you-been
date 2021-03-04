@@ -6,13 +6,16 @@ import { BrowserRouter } from 'react-router-dom';
 import { GlobalStyle } from './assets/styles/GlobalStyles';
 import { ApolloProvider } from '@apollo/client';
 import { client } from './client';
+import RecordProvider from './components/maps/RecordProvider';
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <ApolloProvider client={client}>
-        <Root />
-        <GlobalStyle/>
+        <RecordProvider>
+          <Root />
+          <GlobalStyle/>
+        </RecordProvider>
       </ApolloProvider>
     </BrowserRouter>
   </React.StrictMode>,

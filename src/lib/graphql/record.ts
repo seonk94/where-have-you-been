@@ -6,7 +6,6 @@ export type Record = {
     coordinate: number[];
     title: string;
     content: string;
-    iconType: string;
     date: string;
     userId: number;
 };
@@ -18,7 +17,6 @@ export const GET_RECORDS = gql`
       _id
       title
       content
-      iconType
       date
       userId
       coordinate
@@ -41,7 +39,6 @@ export const GET_RECORDS_BY_USERID = gql`
         _id
         title
         content
-        iconType
         date
         userId
         coordinate
@@ -54,7 +51,6 @@ export const CREATE_RECORD = gql`
   mutation CreateRecord(
     $title: String!,
     $content: String!,
-    $iconType: String!,
     $date: String!,
     $userId: ID!,
     $coordinate: [Float]!
@@ -63,7 +59,6 @@ export const CREATE_RECORD = gql`
       data: {
         title: $title,
         content: $content,
-        iconType: $iconType,
         date: $date,
         userId: $userId,
         coordinate: $coordinate
@@ -72,7 +67,6 @@ export const CREATE_RECORD = gql`
       _id
       title
       content
-      iconType
       date
       coordinate
       userId
@@ -85,7 +79,6 @@ export type CreateRecordResponse = {
     _id: number;
     title: string;
     content: string;
-    iconType: string;
     date: string;
     coordinate: number[];
     userId: number;
