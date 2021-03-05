@@ -3,11 +3,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import MapContext from 'src/components/maps/MapProvider';
 import RecordProvider, { useMainTemplateState } from 'src/components/maps/RecordProvider';
 import { CreateRecordResponse, CREATE_RECORD } from 'src/lib/graphql/record';
+import { MarkerClustering } from 'src/lib/utils/MarkerClustering';
 import styled from 'styled-components';
 
 const MapContainer = styled.div`
   width: 100%;
-  height: calc(100vh - 49px);
+  height: calc(100vh - 64px);
 `;
 
 function main() {

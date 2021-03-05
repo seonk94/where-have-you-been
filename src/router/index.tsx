@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import AppBar from 'src/components/navbar/AppBar';
+import AppToolbar from 'src/components/navbar/AppToolBar';
 import main from 'src/pages/main';
 
 function Root() {
 
   return <>
-    <AppBar/>
+    <AppToolbar/>
     <Switch>
       <Route exact
         path="/"
