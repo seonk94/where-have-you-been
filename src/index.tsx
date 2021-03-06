@@ -7,15 +7,19 @@ import { GlobalStyle } from './assets/styles/GlobalStyles';
 import { ApolloProvider } from '@apollo/client';
 import { client } from './client';
 import RecordProvider from './components/maps/RecordProvider';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <ApolloProvider client={client}>
-        <RecordProvider>
-          <Root />
-          <GlobalStyle/>
-        </RecordProvider>
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <RecordProvider>
+            <Root />
+            <GlobalStyle/>
+          </RecordProvider>
+        </MuiPickersUtilsProvider>
       </ApolloProvider>
     </BrowserRouter>
   </React.StrictMode>,
