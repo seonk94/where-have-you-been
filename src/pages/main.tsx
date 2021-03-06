@@ -1,9 +1,9 @@
 import { useMutation } from '@apollo/client';
 import React, { useEffect, useRef, useState } from 'react';
+import AddOverlay from 'src/components/maps/AddOverlay';
 import MapContext from 'src/components/maps/MapProvider';
 import RecordProvider, { useMainTemplateState } from 'src/components/maps/RecordProvider';
 import { CreateRecordResponse, CREATE_RECORD } from 'src/lib/graphql/record';
-import { MarkerClustering } from 'src/lib/utils/MarkerClustering';
 import styled from 'styled-components';
 
 const MapContainer = styled.div`
@@ -23,24 +23,6 @@ function main() {
     };
     const map = new naver.maps.Map('map', mapOptions);
     setNaverMap(map);
-    
-    const marker1 = new naver.maps.Marker({
-      map,
-      position : new naver.maps.LatLng(37.3595704, 127.105399)
-    });
-
-    // naver.maps.Event.addListener(map, 'click', (e) => {
-    //   const coordinate = [e.coord.y, e.coord.x]; 
-    //   createRecord({
-    //     variables : {
-    //       date : '2021-03-04',
-    //       title : 'title',
-    //       content : 'Content',
-    //       coordinate,
-    //       userId : 1
-    //     }
-    //   });
-    // });
   }, []);
 
   useEffect(() => {
@@ -61,6 +43,9 @@ function main() {
           width : '100%',
           height : '100%'
         }}/>
+        {
+          naverMap && <AddOverlay/>
+        }
       </MapContainer>
     </MapContext.Provider>
   );
