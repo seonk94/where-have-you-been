@@ -10,6 +10,8 @@ import RecordProvider from './components/maps/RecordProvider';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 
+(window.Kakao).init(process.env.REACT_APP_KAKAO_KEY);
+
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
