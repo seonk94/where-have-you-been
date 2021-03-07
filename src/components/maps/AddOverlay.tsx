@@ -45,6 +45,7 @@ function AddOverlay() {
       const newMarker = new naver.maps.Marker({
         map : naverMap as naver.maps.Map
       });
+      newMarker.setVisible(false);
       setMarker(newMarker);
 
       naver.maps.Event.addListener(naverMap, 'click', (e) => {
