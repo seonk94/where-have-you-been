@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
@@ -12,6 +12,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import UserProvider, { UserContext } from 'src/lib/provider/UserProvider';
 
 const useStyles = makeStyles({
   list : {
@@ -30,7 +31,7 @@ const useStyles = makeStyles({
 
 function AppToolbar() {
   const [drawer, setDrawer] = useState(false);
-
+  const { userId } = useContext(UserContext);
   const classes = useStyles();
 
   const toggleDrawer = (open: boolean) => (
@@ -74,13 +75,15 @@ function AppToolbar() {
   );
   
   return (
-
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton edge="start"  onClick={() => setDrawer(true)} color="inherit" aria-label="menu">
-            <MenuIcon />
-          </IconButton>
+          {
+            userId && 
+            <IconButton edge="start"  onClick={() => setDrawer(true)} color="inherit" aria-label="menu">
+              <MenuIcon />
+            </IconButton>
+          }
           <SwipeableDrawer anchor="left" open={drawer} onOpen={toggleDrawer(true)} onClose={toggleDrawer(false)}>
             {list()}
           </SwipeableDrawer>

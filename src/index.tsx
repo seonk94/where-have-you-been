@@ -9,20 +9,23 @@ import { client } from './client';
 import RecordProvider from './components/maps/RecordProvider';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
+import UserProvider from './lib/provider/UserProvider';
 
 (window.Kakao).init(process.env.REACT_APP_KAKAO_KEY);
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <ApolloProvider client={client}>
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <RecordProvider>
-            <Root />
-            <GlobalStyle/>
-          </RecordProvider>
-        </MuiPickersUtilsProvider>
-      </ApolloProvider>
+      <UserProvider>
+        <ApolloProvider client={client}>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <RecordProvider>
+              <Root />
+              <GlobalStyle/>
+            </RecordProvider>
+          </MuiPickersUtilsProvider>
+        </ApolloProvider>
+      </UserProvider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
