@@ -2,7 +2,7 @@ import { useMutation } from '@apollo/client';
 import React, { useEffect, useRef, useState } from 'react';
 import AddOverlay from 'src/components/maps/AddOverlay';
 import MapContext from 'src/components/maps/MapProvider';
-import RecordProvider, { useMainTemplateState } from 'src/components/maps/RecordProvider';
+import RecordProvider, { useMainTemplateState } from 'src/lib/provider/RecordProvider';
 import { CreateRecordResponse, CREATE_RECORD } from 'src/lib/graphql/record';
 import styled from 'styled-components';
 
