@@ -20,8 +20,8 @@ function UserProvider({ children } : Props) {
     window.Kakao.API.request({
       url : '/v2/user/me'
     })
-      .then((res: any) => {
-        console.log(res);
+      .then((res: { id: number, connected_at: string}) => {
+        setUserId(res.id);
       })
       .catch((err: any) => {
         if (history.location.pathname !== '/login') {
