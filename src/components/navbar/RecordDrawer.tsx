@@ -56,7 +56,7 @@ function RecordDrawer({ toggleDrawer, drawer } : Props) {
       <List className={classes.list}>
         {
           data.map((record, index) => <>
-            <ListItem key={record._id}>
+            <ListItem key={index}>
               <TitleRow>
                 <Typography variant="h6">
                   {record.title}

@@ -9,7 +9,7 @@ import { client } from './client';
 import RecordProvider from './lib/provider/RecordProvider';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
-import UserProvider from './lib/provider/UserProvider';
+import { UserProvider } from './lib/provider/UserProvider';
 
 (window.Kakao).init(process.env.REACT_APP_KAKAO_KEY);
 

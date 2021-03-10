@@ -5,8 +5,10 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import { UserContext } from 'src/lib/provider/UserProvider';
 import RecordDrawer from './RecordDrawer';
+import { Button } from '@material-ui/core';
+import { useUserState } from 'src/lib/provider/UserProvider';
+import { useHistory } from 'react-router';
 
 const useStyles = makeStyles({
   list : {
@@ -20,13 +22,17 @@ const useStyles = makeStyles({
   },
   title : {
     flexGrow : 1
+  },
+  spacer : {
+    flexGrow : 1
   }
 });
 
 function AppToolbar() {
   const [drawer, setDrawer] = useState(false);
-  const { userId } = useContext(UserContext);
   const classes = useStyles();
+  const state = useUserState();
+  const history = useHistory();
 
   const toggleDrawer = (open: boolean) => (
     event: React.KeyboardEvent | React.MouseEvent
@@ -42,12 +48,20 @@ function AppToolbar() {
     setDrawer(open);
   };
 
+  function handleLogout() {
+    window.Kakao.Auth.logout();
+  }
+
+  function handleLogin() {
+    history.push('/login');
+  }
+
   return (
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
           {
-            userId && 
+            state.userId && 
             <IconButton edge="start"  onClick={() => setDrawer(true)} color="inherit" aria-label="menu">
               <MenuIcon />
             </IconButton>
@@ -56,6 +70,12 @@ function AppToolbar() {
           <Typography variant="h6" className={classes.title}>
             Map Marker
           </Typography>
+          <div className={classes.spacer}/>
+          {
+            state.userId 
+              ? <Button onClick={() => handleLogout()}>로그아웃</Button>
+              : <Button onClick={() => handleLogin()}>로그인</Button>
+          }
         </Toolbar>
       </AppBar>
     </div>

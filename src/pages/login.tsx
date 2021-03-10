@@ -1,8 +1,9 @@
 import { Box, Container, Typography } from '@material-ui/core';
-import React from 'react';
+import React, { useContext } from 'react';
 import KakaoLoginButton from 'src/assets/images/kakao_login_medium_narrow.png';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router';
+import { getMe, useUserDispatch } from 'src/lib/provider/UserProvider';
 
 const useStyles = makeStyles({
   container : {
@@ -41,6 +42,8 @@ const useStyles = makeStyles({
 function login() {
   const classes = useStyles();
   const history = useHistory();
+  const dispatch = useUserDispatch();
+  
   function handleLogin() {
     window.Kakao.Auth.login({
       success : function(authObj : {
@@ -51,6 +54,7 @@ function login() {
         token_type: string;
       }) {
         window.Kakao.Auth.setAccessToken(authObj.access_token);
+        getMe(dispatch);
         history.push('/');
       },
       fail : function(err : {

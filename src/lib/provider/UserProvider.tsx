@@ -1,42 +1,61 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { createContext, useEffect, useState } from 'react';
-import { useHistory } from 'react-router';
+import React, { createContext, Dispatch, useContext, useReducer } from 'react';
 
-
-interface Props {
-  children: React.ReactNode
-}
-interface ContextType {
-  userId: number | null;
+type State = {
+  userId: null | number;
 }
 
-export const UserContext = createContext<ContextType>({ userId : null}); 
+type Action = { type: 'SET_USERID'; userId: number | null };
 
-function UserProvider({ children } : Props) {
-  const [userId, setUserId] = useState<number | null>(null);
-  const history = useHistory();
+type UserDispatch = Dispatch<Action>
 
-  useEffect(() => {
-    window.Kakao.API.request({
+const UserStateContext = createContext<State | null>(null);
+const UserDispatchContext = createContext<UserDispatch | null>(null);
+
+export async function getMe(dispatch : UserDispatch) {
+  try {
+    const res : { id: number, connected_at: string} = await window.Kakao.API.request({
       url : '/v2/user/me'
-    })
-      .then((res: { id: number, connected_at: string}) => {
-        setUserId(res.id);
-      })
-      .catch((err: any) => {
-        if (history.location.pathname !== '/login') {
-          alert('로그인이필요합니다.');
-          history.push('/login');
-        }
-      });
-  }, []);
+    });
+    dispatch({ type : 'SET_USERID', userId : res.id });
+  } catch(e) {
+    console.error(e);
+  }
+}
+
+function reducer(state: State, action: Action) {
+  switch(action.type) {
+  case 'SET_USERID':
+    return {
+      ...state,
+      userId : action.userId
+    };
+  default: 
+    throw new Error('UserProvider Action Error');
+  }
+}
+
+export function UserProvider({ children } : { children : React.ReactNode }) {
+  const [state, dispatch] = useReducer(reducer, {
+    userId : null
+  });
 
   return (
-    <UserContext.Provider value={{
-      userId : userId
-    }}>
-      {children}
-    </UserContext.Provider>
+    <UserStateContext.Provider value={state}>
+      <UserDispatchContext.Provider value={dispatch}>
+        {children}
+      </UserDispatchContext.Provider>
+    </UserStateContext.Provider>
   );
 }
-export default UserProvider;
+
+export function useUserState() {
+  const state = useContext(UserStateContext);
+  if (!state) throw new Error('UserStateContext error');
+  return state;
+}
+
+export function useUserDispatch() {
+  const dispatch = useContext(UserDispatchContext);
+  if (!dispatch) throw new Error('UserDispatchContext error');
+  return dispatch;
+}
