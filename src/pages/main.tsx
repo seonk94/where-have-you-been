@@ -1,9 +1,7 @@
-import { useMutation } from '@apollo/client';
 import React, { useEffect, useRef, useState } from 'react';
 import AddOverlay from 'src/components/maps/AddOverlay';
 import MapContext from 'src/components/maps/MapProvider';
-import RecordProvider, { useMainTemplateState } from 'src/lib/provider/RecordProvider';
-import { CreateRecordResponse, CREATE_RECORD } from 'src/lib/graphql/record';
+import { useMainTemplateState } from 'src/lib/provider/RecordProvider';
 import styled from 'styled-components';
 
 const MapContainer = styled.div`
@@ -14,7 +12,6 @@ const MapContainer = styled.div`
 function main() {
   const mapRef = useRef(null);
   const [naverMap, setNaverMap] = useState<naver.maps.Map | null>(null);
-  const [createRecord] = useMutation<CreateRecordResponse>(CREATE_RECORD);
   const { data } = useMainTemplateState();
   useEffect(() => {
     const mapOptions = {

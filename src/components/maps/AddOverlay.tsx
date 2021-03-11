@@ -1,8 +1,14 @@
+import { useMutation } from '@apollo/client';
 import { createStyles, Theme, AppBar, makeStyles, Toolbar, Tooltip, Typography, Button, Drawer, Input, Box } from '@material-ui/core';
 import { DatePicker } from '@material-ui/pickers';
 
+import { CreateRecordResponse, CREATE_RECORD } from 'src/lib/graphql/record';
 import React, { useContext, useEffect, useState } from 'react';
+import { useUserState } from 'src/lib/provider/UserProvider';
 import MapContext from './MapProvider';
+import useInputs from 'src/lib/hooks/useInputs';
+import { useHistory } from 'react-router';
+import { formatDate } from 'src/lib';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -33,12 +39,21 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 function AddOverlay() {
+  const history = useHistory();
   const classes = useStyles();
+  const state = useUserState();
   const { naverMap } = useContext(MapContext);
+  const [createRecord] = useMutation<CreateRecordResponse>(CREATE_RECORD);
   const [select, setSelect] = useState(false);
   const [drawer, setDrawer] = useState(false);
   const [marker, setMarker] = useState<null | naver.maps.Marker>(null);
   const [selectedDate, handleDateChange] = useState(new Date());
+  const [coordinate, setCoordinate] = useState([0, 0]);
+
+  const [form, onChange] = useInputs({
+    title : '',
+    content : ''
+  });
 
   useEffect(() => {
     if (naverMap) {
@@ -50,9 +65,9 @@ function AddOverlay() {
 
       naver.maps.Event.addListener(naverMap, 'click', (e) => {
         newMarker.setPosition(e.coord);
+        setCoordinate([e.coord.y, e.coord.x] as number[]);
         newMarker.setVisible(true);
         setSelect(true);
-
       });
     }
   }, []);
@@ -73,6 +88,24 @@ function AddOverlay() {
     }
   }
 
+  function handleSave() {
+    if (state.userId) {
+      createRecord({
+        variables : {
+          title : form.title,
+          content : form.content,
+          date : formatDate(selectedDate),
+          coordinate : coordinate,
+          userId : state.userId
+        }
+      });
+    } else {
+      alert('로그인이 필요합니다.');
+      history.push('/login');
+    }
+    handleClose();
+  }
+
   return select ? (<AppBar position="fixed" color="primary" className={classes.appBar}> 
     <Toolbar>
       <div className={classes.spacer}/>
@@ -85,10 +118,10 @@ function AddOverlay() {
       <Drawer anchor="bottom" open={drawer}>
         <div className={classes.drawer}>
           <Box className={classes.inputBox}>
-            <Input className={classes.input} placeholder="title"/>
+            <Input value={form.title} onChange={onChange} name="title" className={classes.input} placeholder="title"/>
           </Box>
           <Box className={classes.inputBox}>
-            <Input className={classes.input} placeholder="description"/>
+            <Input value={form.content} onChange={onChange} name="content" className={classes.input} placeholder="description"/>
           </Box>
           <Box className={classes.inputBox}>
             <DatePicker
@@ -103,7 +136,7 @@ function AddOverlay() {
           <div className={classes.spacer} />
           <div className={classes.bottom}>
             <div className={classes.spacer} />
-            <Button size="small" color="secondary" >
+            <Button size="small" color="secondary" onClick={handleSave}>
         저장
             </Button>
             <Button size="small" color="default" onClick={handleClose} >
