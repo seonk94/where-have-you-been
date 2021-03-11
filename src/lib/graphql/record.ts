@@ -33,7 +33,7 @@ export type GetRecordsResponse = {
 };
 
 export const GET_RECORDS_BY_USERID = gql`
-  query RecordsByUserId($userId: ID) {
+  query RecordsByUserId($userId: Int) {
     recordsByUserId(userId: $userId) {
       data {
         _id
@@ -52,7 +52,7 @@ export const CREATE_RECORD = gql`
     $title: String!,
     $content: String!,
     $date: String!,
-    $userId: ID!,
+    $userId: Int!,
     $coordinate: [Float]!
   ) {
     createRecord(
@@ -86,7 +86,7 @@ export type CreateRecordResponse = {
 };
 
 export const DELETE_RECORD = gql`
-  mutation DeleteRecord($id: ID!) {
+  mutation DeleteRecord($id: Int!) {
     deleteRecord(id: $id) {
       _id
     }
