@@ -4,7 +4,6 @@ import { DatePicker } from '@material-ui/pickers';
 
 import { CreateRecordResponse, CREATE_RECORD } from 'src/lib/graphql/record';
 import React, { useContext, useEffect, useState } from 'react';
-import { useUserState } from 'src/lib/provider/UserProvider';
 import MapContext from './MapProvider';
 import useInputs from 'src/lib/hooks/useInputs';
 import { useHistory } from 'react-router';
@@ -41,7 +40,6 @@ const useStyles = makeStyles((theme: Theme) =>
 function AddOverlay() {
   const history = useHistory();
   const classes = useStyles();
-  const state = useUserState();
   const { naverMap } = useContext(MapContext);
   const [createRecord] = useMutation<CreateRecordResponse>(CREATE_RECORD);
   const [select, setSelect] = useState(false);
@@ -89,21 +87,21 @@ function AddOverlay() {
   }
 
   function handleSave() {
-    if (state.userId) {
-      createRecord({
-        variables : {
-          title : form.title,
-          content : form.content,
-          date : formatDate(selectedDate),
-          coordinate : coordinate,
-          userId : state.userId
-        }
-      });
-    } else {
-      alert('로그인이 필요합니다.');
-      history.push('/login');
-    }
-    handleClose();
+    // if (state.userId) {
+    //   createRecord({
+    //     variables : {
+    //       title : form.title,
+    //       content : form.content,
+    //       date : formatDate(selectedDate),
+    //       coordinate : coordinate,
+    //       userId : state.userId
+    //     }
+    //   });
+    // } else {
+    //   alert('로그인이 필요합니다.');
+    //   history.push('/login');
+    // }
+    // handleClose();
   }
 
   return select ? (<AppBar position="fixed" color="primary" className={classes.appBar}> 

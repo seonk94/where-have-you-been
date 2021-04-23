@@ -7,8 +7,9 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import RecordDrawer from './RecordDrawer';
 import { Button } from '@material-ui/core';
-import { useUserState } from 'src/lib/provider/UserProvider';
 import { useHistory } from 'react-router';
+import { firebaseAuth } from 'src/lib/provider/AuthProvider';
+import { auth } from 'src/firebase';
 
 const useStyles = makeStyles({
   list : {
@@ -31,8 +32,8 @@ const useStyles = makeStyles({
 function AppToolbar() {
   const [drawer, setDrawer] = useState(false);
   const classes = useStyles();
-  const state = useUserState();
   const history = useHistory();
+  const { user } = useContext(firebaseAuth);
 
   const toggleDrawer = (open: boolean) => (
     event: React.KeyboardEvent | React.MouseEvent
@@ -49,7 +50,8 @@ function AppToolbar() {
   };
 
   function handleLogout() {
-    window.Kakao.Auth.logout();
+    auth.signOut();
+    history.push('/login');
   }
 
   function handleLogin() {
@@ -61,7 +63,7 @@ function AppToolbar() {
       <AppBar position="static">
         <Toolbar>
           {
-            state.userId && 
+            user && 
             <IconButton edge="start"  onClick={() => setDrawer(true)} color="inherit" aria-label="menu">
               <MenuIcon />
             </IconButton>
@@ -72,7 +74,7 @@ function AppToolbar() {
           </Typography>
           <div className={classes.spacer}/>
           {
-            state.userId 
+            user
               ? <Button onClick={() => handleLogout()}>로그아웃</Button>
               : <Button onClick={() => handleLogin()}>로그인</Button>
           }

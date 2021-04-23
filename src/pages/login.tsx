@@ -1,40 +1,35 @@
 import { Box, Container, Typography } from '@material-ui/core';
-import React, { useContext } from 'react';
-import KakaoLoginButton from 'src/assets/images/kakao_login_medium_narrow.png';
+import React, { useContext, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router';
-import { getMe, useUserDispatch } from 'src/lib/provider/UserProvider';
-
+import { Spacer } from 'src/assets/styles/GlobalStyles';
+import * as firebaseui from 'firebaseui';
+import firebase from 'firebase/app';
+import { GoogleProvider } from 'src/firebase';
 const useStyles = makeStyles({
   container : {
-    height : 'calc(100vh - 64px)'
+    height : '100vh'
   },
   loginColumn : {
     height : '100%',
     display : 'flex',
-    alignItems : 'center',
-    justifyContent : 'center'
-  },
-  loginBox : {
-    border : '1px solid #e6e6e6',
-    padding : '24px',
-    borderRadius : '8px'
-  },
-  loginImage : {
-    display : 'block',
-    cursor : 'pointer'
-  },
-  loginButton : {
-    outline : 'none',
-    border : 'none',
-    background : '#fff',
-    padding : '0'
+    flexDirection : 'column',
+    backgroundColor : '#f5f5f5',
+    width : 'fit-content',
+    minWidth : '320px',
+    margin : 'auto',
+    padding : '16px',
+    boxSizing : 'border-box'
   },
   title : {
     fontWeight : 700,
     paddingBottom : '8px',
     marginBottom : '16px',
+    marginTop : '48px',
     borderBottom : '1px solid #212121'
+  },
+  footer : {
+    textAlign : 'center'
   }
 });
 
@@ -42,40 +37,32 @@ const useStyles = makeStyles({
 function login() {
   const classes = useStyles();
   const history = useHistory();
-  const dispatch = useUserDispatch();
+
   
-  function handleLogin() {
-    window.Kakao.Auth.login({
-      success : function(authObj : {
-        access_token: string;
-        expires_in: number;
-        refresh_token: string;
-        refresh_token_expires_in: number;
-        token_type: string;
-      }) {
-        window.Kakao.Auth.setAccessToken(authObj.access_token);
-        getMe(dispatch);
-        history.push('/');
-      },
-      fail : function(err : {
-        error: string;
-        error_description: string;
-      }) {
-        console.error(err);
-      }
+  useEffect(() => {
+    let ui = firebaseui.auth.AuthUI.getInstance();
+    if (!ui) {
+      ui = new firebaseui.auth.AuthUI(firebase.auth());
+    }
+    ui.start('#firebaseui-auth-container', {
+      signInSuccessUrl : '/',
+      signInOptions : [
+        GoogleProvider
+      ]
     });
-  }
+  }, []);
+
   return (
     <Container className={classes.container}>
       <Box className={classes.loginColumn}>
-        <Box className={classes.loginBox}>
-          <Typography variant="h6" className={classes.title}>
+        <Typography variant="h4" className={classes.title}>
             로그인
-          </Typography>
-          <button onClick={handleLogin} className={classes.loginButton}>
-            <img className={classes.loginImage} src={KakaoLoginButton} alt="kakao login"/>
-          </button>
-        </Box>
+        </Typography>
+        <section id="firebaseui-auth-container"></section>
+        <Spacer/>
+        <Typography variant="caption" className={classes.footer}>
+            buba @ record-map
+        </Typography>
       </Box>
     </Container>
   );
