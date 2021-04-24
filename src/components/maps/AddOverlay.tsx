@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client';
-import { createStyles, Theme, AppBar, makeStyles, Toolbar, Tooltip, Typography, Button, Drawer, Input, Box } from '@material-ui/core';
+import { createStyles, Theme, AppBar, makeStyles, Toolbar, Tooltip, Typography, Button, Drawer, Input, Box, useRadioGroup } from '@material-ui/core';
 import { DatePicker } from '@material-ui/pickers';
 
 import { CreateRecordResponse, CREATE_RECORD } from 'src/lib/graphql/record';
@@ -8,6 +8,7 @@ import MapContext from './MapProvider';
 import useInputs from 'src/lib/hooks/useInputs';
 import { useHistory } from 'react-router';
 import { formatDate } from 'src/lib';
+import { firebaseAuth } from 'src/lib/provider/AuthProvider';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -47,7 +48,7 @@ function AddOverlay() {
   const [marker, setMarker] = useState<null | naver.maps.Marker>(null);
   const [selectedDate, handleDateChange] = useState(new Date());
   const [coordinate, setCoordinate] = useState([0, 0]);
-
+  const { user } = useContext(firebaseAuth);
   const [form, onChange] = useInputs({
     title : '',
     content : ''
@@ -87,21 +88,21 @@ function AddOverlay() {
   }
 
   function handleSave() {
-    // if (state.userId) {
-    //   createRecord({
-    //     variables : {
-    //       title : form.title,
-    //       content : form.content,
-    //       date : formatDate(selectedDate),
-    //       coordinate : coordinate,
-    //       userId : state.userId
-    //     }
-    //   });
-    // } else {
-    //   alert('로그인이 필요합니다.');
-    //   history.push('/login');
-    // }
-    // handleClose();
+    if (user) {
+      createRecord({
+        variables : {
+          title : form.title,
+          content : form.content,
+          date : formatDate(selectedDate),
+          coordinate : coordinate,
+          userId : user.uid
+        }
+      });
+    } else {
+      alert('로그인이 필요합니다.');
+      history.push('/login');
+    }
+    handleClose();
   }
 
   return select ? (<AppBar position="fixed" color="primary" className={classes.appBar}> 

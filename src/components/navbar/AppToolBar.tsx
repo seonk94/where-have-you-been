@@ -64,11 +64,13 @@ function AppToolbar() {
         <Toolbar>
           {
             user && 
-            <IconButton edge="start"  onClick={() => setDrawer(true)} color="inherit" aria-label="menu">
-              <MenuIcon />
-            </IconButton>
+            <>
+              <IconButton edge="start"  onClick={() => setDrawer(true)} color="inherit" aria-label="menu">
+                <MenuIcon />
+              </IconButton>
+              <RecordDrawer drawer={drawer} toggleDrawer={toggleDrawer}/>
+            </>
           }
-          <RecordDrawer drawer={drawer} toggleDrawer={toggleDrawer}/>
           <Typography variant="h6" className={classes.title}>
             Map Marker
           </Typography>

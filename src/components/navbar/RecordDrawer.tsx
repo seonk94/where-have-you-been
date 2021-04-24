@@ -6,6 +6,7 @@ import { Divider, Grid, IconButton, List, ListItemIcon, ListItemText, Typography
 import { useMainTemplateState } from 'src/lib/provider/RecordProvider';
 import { MoreVert } from '@material-ui/icons';
 import styled from 'styled-components';
+import RecordCard from '../common/RecordCard';
 
 interface Props {
   toggleDrawer: (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => void
@@ -15,33 +16,17 @@ interface Props {
 const useStyles = makeStyles({
   drawer : {
     width : 250
-  },
-  list : {
-    padding : '0'
-  },
-  root : {
-    flexGrow : 1
-  },
-  spacer : {
-    flexGrow : 1
   }
 });
 
-const ListItem = styled.div`
-  display: block;
-  padding: 4px;
-`;
-
-const TitleRow = styled.div`
+const RecordCardContainer = styled.div`
   display: flex;
-  align-items: center;
-  width: 100%;
-`;
+  flex-direction: column;
+  padding: 8px;
 
-const DateRow =styled.div`
-display: flex;
-align-items: center;
-width: 100%;
+  > div {
+    margin-bottom: 8px;
+  }
 `;
 
 function RecordDrawer({ toggleDrawer, drawer } : Props) {
@@ -53,34 +38,12 @@ function RecordDrawer({ toggleDrawer, drawer } : Props) {
       className={clsx(classes.drawer)}
       role="presentation"
     >
-      <List className={classes.list}>
-        {
-          data.map((record, index) => <>
-            <ListItem key={index}>
-              <TitleRow>
-                <Typography variant="h6">
-                  {record.title}
-                </Typography>
-                <div className={classes.spacer}/>
-                <IconButton size="small" edge="start" color="inherit" aria-label="menu">
-                  <MoreVert />
-                </IconButton>
-              </TitleRow>
-              <DateRow>
-                <Typography variant="caption">
-                  {record.date}
-                </Typography>
-              </DateRow>
-              <Grid item>
-                <Typography variant="subtitle2">
-                  {record.content}
-                </Typography>
-              </Grid>
-            </ListItem>
-            {index !== data.length -1 && <Divider/>}
-          </>)
-        }
-      </List>
+      <RecordCardContainer>
+        {data.map(record => (
+          <RecordCard record={record} key={record._id} />
+        ))}
+      </RecordCardContainer>
+
     </div>
   );
 
