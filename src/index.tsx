@@ -10,22 +10,41 @@ import RecordProvider from './lib/provider/RecordProvider';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import AuthProvider from './lib/provider/AuthProvider';
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 
+const customTheme = createMuiTheme({
+  palette : {
+    primary : {
+      main : '#546e7a'
+    },
+    secondary : {
+      main : '#004d40'
+    },
+    error : {
+      main : '#d50000'
+    }
+  },
+  typography : {
+    fontFamily : 'Noto Sans'
+  }
+});
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <AuthProvider>
-        <ApolloProvider client={client}>
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <RecordProvider>
-              <Root />
-              <GlobalStyle/>
-            </RecordProvider>
-          </MuiPickersUtilsProvider>
-        </ApolloProvider>
-      </AuthProvider>
-    </BrowserRouter>
+    <MuiThemeProvider theme={customTheme}>
+      <BrowserRouter>
+        <AuthProvider>
+          <ApolloProvider client={client}>
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <RecordProvider>
+                <Root />
+                <GlobalStyle/>
+              </RecordProvider>
+            </MuiPickersUtilsProvider>
+          </ApolloProvider>
+        </AuthProvider>
+      </BrowserRouter>
+    </MuiThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
