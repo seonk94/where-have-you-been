@@ -1,0 +1,7 @@
+type Record {
+  date: String!
+  content: String!
+  userId: String
+  title: String!
+  coordinate: [Float]
+}
