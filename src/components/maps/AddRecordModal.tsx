@@ -8,13 +8,9 @@ import { firebaseAuth } from 'src/lib/provider/AuthProvider';
 import { formatDate } from 'src/lib';
 import { useHistory } from 'react-router';
 
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
-
 function getModalStyle() {
-  const top = 50 + rand();
-  const left = 50 + rand();
+  const top = 50;
+  const left = 50;
 
   return {
     top : `${top}%`,
@@ -60,8 +56,8 @@ interface Props {
 }
 
 function AddRecordModal({ open, handleClose, coordinate }: Props) {
-  const [modalStyle] = useState(getModalStyle);
   const history = useHistory();
+  const [modalStyle] = useState(getModalStyle);
   const [selectedDate, handleDateChange] = useState(new Date());
   const { user } = useContext(firebaseAuth);
   const [createRecord] = useMutation<CreateRecordResponse>(CREATE_RECORD);
