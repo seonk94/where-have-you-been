@@ -1,51 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react';
-import AddOverlay from 'src/components/maps/AddOverlay';
-import MapContext from 'src/components/maps/MapProvider';
-import { useMainTemplateState } from 'src/lib/provider/RecordProvider';
-import styled from 'styled-components';
-
-const MapContainer = styled.div`
-  width: 100%;
-  height: calc(100vh - 64px);
-`;
+import React from 'react';
+import MapTemplate from 'src/components/maps/MapTemplate';
+import AppToolbar from 'src/components/navbar/AppToolBar';
+import RecordProvider from 'src/lib/provider/RecordProvider';
 
 function main() {
-  const mapRef = useRef(null);
-  const [naverMap, setNaverMap] = useState<naver.maps.Map | null>(null);
-  const { data } = useMainTemplateState();
-  useEffect(() => {
-    const mapOptions = {
-      center : new naver.maps.LatLng(37.3595704, 127.105399),
-      zoom : 15
-    };
-    const map = new naver.maps.Map('map', mapOptions);
-    setNaverMap(map);
-  }, []);
-
-  useEffect(() => {
-    if (naverMap) {
-      data.forEach(marker => {
-        new naver.maps.Marker({
-          map : naverMap,
-          position : new naver.maps.LatLng(marker.coordinate[0], marker.coordinate[1])
-        });
-      });
-    }
-  }, [data]);
-  
+ 
   return (
-    <MapContext.Provider value={{ naverMap }}>
-      <MapContainer>
-        <div id="map" ref={mapRef} style={{
-          width : '100%',
-          height : '100%'
-        }}/>
-        {
-          naverMap && <AddOverlay/>
-        }
-      </MapContainer>
-    </MapContext.Provider>
+    <RecordProvider>
+      <AppToolbar/>
+      <MapTemplate/>
+    </RecordProvider>
   );
 }
+
 
 export default main;

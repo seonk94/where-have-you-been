@@ -36,10 +36,8 @@ ReactDOM.render(
         <AuthProvider>
           <ApolloProvider client={client}>
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
-              <RecordProvider>
-                <Root />
-                <GlobalStyle/>
-              </RecordProvider>
+              <Root />
+              <GlobalStyle/>
             </MuiPickersUtilsProvider>
           </ApolloProvider>
         </AuthProvider>
