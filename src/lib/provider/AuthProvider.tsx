@@ -25,6 +25,7 @@ function AuthProvider({ children } : Props) {
     });
   }, []);
 
+
   
   return (
     <firebaseAuth.Provider value={{
