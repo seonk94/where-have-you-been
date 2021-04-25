@@ -111,9 +111,11 @@ function AddOverlay() {
       <Typography variant="subtitle2">
         새로 추가하시겠습니까?
       </Typography>
-      <Button size="small" color="secondary" onClick={() => setDrawer(true)}>
+      <Box mx={1}>
+        <Button size="small" variant="contained" color="secondary" onClick={() => setDrawer(true)}>
         YES
-      </Button>
+        </Button>
+      </Box>
       <Drawer anchor="bottom" open={drawer}>
         <div className={classes.drawer}>
           <Box className={classes.inputBox}>
@@ -135,18 +137,25 @@ function AddOverlay() {
           <div className={classes.spacer} />
           <div className={classes.bottom}>
             <div className={classes.spacer} />
-            <Button size="small" color="secondary" onClick={handleSave}>
+            <Box mx={1}>
+              <Button size="small" variant="contained" color="secondary" onClick={handleSave}>
         저장
-            </Button>
-            <Button size="small" color="default" onClick={handleClose} >
+              </Button>
+            </Box>
+            <Box mx={1}>
+
+              <Button size="small" variant="contained" color="default" onClick={handleClose} >
         닫기
-            </Button>
+              </Button>
+            </Box>
           </div>
         </div>
       </Drawer>
-      <Button size="small" color="default" onClick={handleNo}>
+      <Box mx={2}>
+        <Button size="small" variant="contained" color="default" onClick={handleNo}>
         NO
-      </Button>
+        </Button>
+      </Box>
     </Toolbar>
   </AppBar>) : <></>;
 }

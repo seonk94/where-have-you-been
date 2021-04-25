@@ -77,8 +77,8 @@ function AppToolbar() {
           <div className={classes.spacer}/>
           {
             user
-              ? <Button onClick={() => handleLogout()}>로그아웃</Button>
-              : <Button onClick={() => handleLogin()}>로그인</Button>
+              ? <Button color="inherit" onClick={() => handleLogout()}>로그아웃</Button>
+              : <Button color="inherit" onClick={() => handleLogin()}>로그인</Button>
           }
         </Toolbar>
       </AppBar>
