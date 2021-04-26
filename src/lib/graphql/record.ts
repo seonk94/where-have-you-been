@@ -2,7 +2,7 @@ import gql from 'graphql-tag';
 // eslint-disable-next-line import/named
 
 export type Record = {
-    _id: number;
+    _id: string;
     coordinate: number[];
     title: string;
     content: string;
@@ -13,13 +13,13 @@ export type Record = {
 export const GET_RECORDS = gql`
   query AllRecords {
     allRecords {
-    data {
-      _id
-      title
-      content
-      date
-      userId
-      coordinate
+      data {
+        _id
+        title
+        content
+        date
+        userId
+        coordinate
       }
     }
   }
@@ -33,8 +33,8 @@ export type GetRecordsResponse = {
 };
 
 export const GET_RECORDS_BY_USERID = gql`
-  query RecordsByUserId($userId: String) {
-    recordsByUserId(userId: $userId) {
+  query FindRecordsByUserId($userId: String) {
+    findRecordsByUserId(userId: $userId) {
       data {
         _id
         title
@@ -84,6 +84,12 @@ export type CreateRecordResponse = {
     userId: number;
   };
 };
+
+export type FindRecordsByUserIdResponse = {
+  findRecordsByUserId: {
+    data: Record[]
+  }
+}
 
 export const DELETE_RECORD = gql`
   mutation DeleteRecord($id: String!) {
