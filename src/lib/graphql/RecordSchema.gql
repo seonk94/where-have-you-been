@@ -1,7 +1,12 @@
 type Record {
-  date: String!
-  content: String!
-  userId: String
-  title: String!
+  date: String
+  content: String
+  userId: String!
+  title: String
   coordinate: [Float]
+}
+
+type Query {
+  allRecords: [Record!]
+  findRecordsByUserId(userId: String): [Record!]
 }
