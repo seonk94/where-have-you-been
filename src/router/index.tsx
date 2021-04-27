@@ -3,6 +3,7 @@ import React, { Suspense, useContext } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import Loading from 'src/components/common/Loading';
 import { firebaseAuth } from 'src/lib/provider/AuthProvider';
+import board from 'src/pages/board';
 import login from 'src/pages/login';
 import main from 'src/pages/main';
 
@@ -29,6 +30,11 @@ function Root() {
             key="main"
             user={user}
             component={main} />
+          <AuthRoute exact
+            path="/board"
+            key="board"
+            user={user}
+            component={board} />
           <Route exact
             path="/login"
             key="login"
