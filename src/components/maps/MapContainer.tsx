@@ -1,5 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
+import { MapContext } from 'src/lib/provider/MapProvider';
+import AddOverlay from './AddOverlay';
 
 const Container = styled.div`
   position: relative;
@@ -16,21 +18,23 @@ const MapElement = styled.div`
 `;
 
 function MapContainer() {
-  const mapRef = useRef(null);
-  const [naverMap, setNaverMap] = useState<naver.maps.Map | null>(null);
-  
+  const { map, setMap } = useContext(MapContext);
+
   useEffect(() => {
     const mapOptions = {
       center : new naver.maps.LatLng(37.3595704, 127.105399),
       zoom : 15
     };
     const map = new naver.maps.Map('map', mapOptions);
-    setNaverMap(map);
+    if (setMap) {
+      setMap(map);
+    }
   }, []);
   
   return (
     <Container>
-      <MapElement ref={mapRef} id="map" />
+      <MapElement id="map" />
+      <AddOverlay/>
     </Container>
   );
 }

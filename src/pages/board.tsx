@@ -5,6 +5,7 @@ import MapContainer from 'src/components/maps/MapContainer';
 import Appbar from 'src/components/navbar/Appbar';
 import useRecords from 'src/lib/hooks/useRecords';
 import { firebaseAuth } from 'src/lib/provider/AuthProvider';
+import MapProvider from 'src/lib/provider/MapProvider';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -27,18 +28,20 @@ function board() {
 
   
   return (
-    <Container>
-      <Appbar/>
-      <GridContainer container justify="center"
-        alignItems="stretch" direction="row">
+    <MapProvider>
+      <Container>
+        <Appbar/>
+        <GridContainer container justify="center"
+          alignItems="stretch" direction="row">
 
-        <GirdItem item xs={12} sm={6}>
-          <MapContainer/>
-          {data?.findRecordsByUserId.data.map((record, index) => <RecordCardNonBoard isFirst={index === 0} record={record} key={record._id} />)}
-        </GirdItem>
+          <GirdItem item xs={12} sm={6}>
+            <MapContainer/>
+            {data?.findRecordsByUserId.data.map((record, index) => <RecordCardNonBoard isFirst={index === 0} record={record} key={record._id} />)}
+          </GirdItem>
 
-      </GridContainer>
-    </Container>
+        </GridContainer>
+      </Container>
+    </MapProvider>
   );
 }
 

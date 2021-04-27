@@ -1,7 +1,7 @@
 import { createStyles, Theme, AppBar, makeStyles, Toolbar, Typography, Button, Box } from '@material-ui/core';
 
 import React, { useContext, useEffect, useState } from 'react';
-import MapContext from './MapProvider';
+import {MapContext} from 'src/lib/provider/MapProvider';
 
 import AddRecordModal from './AddRecordModal';
 
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) =>
 function AddOverlay() {
 
   const classes = useStyles();
-  const { naverMap } = useContext(MapContext);
+  const { map } = useContext(MapContext);
  
   const [select, setSelect] = useState(false);
   const [open, setOpen] = useState(false);
@@ -31,21 +31,21 @@ function AddOverlay() {
   const [coordinate, setCoordinate] = useState([0, 0]);
 
   useEffect(() => {
-    if (naverMap) {
+    if (map) {
       const newMarker = new naver.maps.Marker({
-        map : naverMap as naver.maps.Map
+        map : map as naver.maps.Map
       });
       newMarker.setVisible(false);
       setMarker(newMarker);
 
-      naver.maps.Event.addListener(naverMap, 'click', (e) => {
+      naver.maps.Event.addListener(map, 'click', (e) => {
         newMarker.setPosition(e.coord);
         setCoordinate([e.coord.y, e.coord.x] as number[]);
         newMarker.setVisible(true);
         setSelect(true);
       });
     }
-  }, []);
+  }, [map]);
 
 
   function handleNo() {
@@ -63,7 +63,7 @@ function AddOverlay() {
     }
   }
 
-  return select ? (<AppBar position="fixed" color="primary" className={classes.appBar}> 
+  return select ? (<AppBar position="absolute" color="primary" className={classes.appBar}> 
     <Toolbar>
       <div className={classes.spacer}/>
       <Typography variant="subtitle2">

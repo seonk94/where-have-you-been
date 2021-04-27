@@ -1,8 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import AddOverlay from 'src/components/maps/AddOverlay';
-import MapContext from 'src/components/maps/MapProvider';
+
 import RecordProvider, { useMainTemplateState } from 'src/lib/provider/RecordProvider';
 import styled from 'styled-components';
+import { MapContext } from 'src/lib/provider/MapProvider';
 
 const MapContainer = styled.div`
   width: 100%;
@@ -10,8 +11,8 @@ const MapContainer = styled.div`
 `;
 
 function MapTemplate() {
-  const mapRef = useRef(null);
-  const [naverMap, setNaverMap] = useState<naver.maps.Map | null>(null);
+  const { map, setMap } = useContext(MapContext);
+
   const { data } = useMainTemplateState();
   
   useEffect(() => {
@@ -20,14 +21,16 @@ function MapTemplate() {
       zoom : 15
     };
     const map = new naver.maps.Map('map', mapOptions);
-    setNaverMap(map);
+    if (setMap) {
+      setMap(map);
+    }
   }, []);
 
   useEffect(() => {
-    if (naverMap) {
+    if (map) {
       data.forEach(marker => {
         new naver.maps.Marker({
-          map : naverMap,
+          map,
           position : new naver.maps.LatLng(marker.coordinate[0], marker.coordinate[1])
         });
       });
@@ -35,17 +38,12 @@ function MapTemplate() {
   }, [data]);
   
   return (
-    <MapContext.Provider value={{ naverMap }}>
-      <MapContainer>
-        <div id="map" ref={mapRef} style={{
-          width : '100%',
-          height : '100%'
-        }}/>
-        {
-          naverMap && <AddOverlay/>
-        }
-      </MapContainer>
-    </MapContext.Provider>
+    <MapContainer>
+      <div id="map" style={{
+        width : '100%',
+        height : '100%'
+      }}/>
+    </MapContainer>
   );
 }
 
