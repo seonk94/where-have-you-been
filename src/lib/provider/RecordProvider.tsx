@@ -1,40 +1,47 @@
 import { useQuery } from '@apollo/client';
 import React, { useState, useReducer, createContext, Dispatch, useContext, useEffect } from 'react';
-import { GetRecordsResponse, GET_RECORDS, Record } from 'src/lib/graphql/record';
+import { FindRecordsByUserIdResponse, GetRecordsResponse, GET_RECORDS, GET_RECORDS_BY_USERID, Record } from 'src/lib/graphql/record';
 
 
 
-type InitData = { type: 'INIT_DATA', payload: Record[] };
-type Action = InitData;
-type MainTemplateState = {
-  data: Record[]
+type SetList = { type: 'SET_LIST', payload: Record[] };
+type PushList = { type: 'PUSH_LIST', payload: Record };
+type Action = SetList | PushList;
+
+type RecordState = {
+  list: Record[]
 };
 
-const MainTemplateStateContext = createContext<MainTemplateState | null>(null);
-const MainTemplateDispatchContext = createContext<Dispatch<Action> | null>(null);
+const RecordStateContext = createContext<RecordState | null>(null);
+const RecordDispatchContext = createContext<Dispatch<Action> | null>(null);
 
-function reducer(state: MainTemplateState, action: Action): MainTemplateState {
+function reducer(state: RecordState, action: Action): RecordState {
   switch (action.type) {
-  case 'INIT_DATA':
+  case 'SET_LIST':
     return {
       ...state,
-      data : action.payload
+      list : action.payload
+    };
+  case 'PUSH_LIST':
+    return {
+      ...state,
+      list : [...state.list, action.payload]
     };
   default:
     throw new Error(`Unhandled action type`);
   }
 }
 
-export const useMainTemplateState = () => {
-  const state = useContext(MainTemplateStateContext);
+export const useRecordState = () => {
+  const state = useContext(RecordStateContext);
   if (!state) {
     throw new Error('not wrapped with MainTemplateProvider');
   }
   return state;
 };
 
-export const useMainTemplateDispatch = () => {
-  const dispatch = useContext(MainTemplateDispatchContext);
+export const useRecordDispatch = () => {
+  const dispatch = useContext(RecordDispatchContext);
   if (!dispatch) {
     throw new Error('not wrapped with MainTemplateProvider');
   }
@@ -42,29 +49,35 @@ export const useMainTemplateDispatch = () => {
 };
 
 interface Props {
-  children: React.ReactNode
+  children: React.ReactNode;
+  userId: string;
 }
 
-function RecordProvider({ children } : Props) {
+function RecordProvider({ children, userId } : Props) {
   const [state, dispatch] = useReducer(reducer, {
-    data : []
+    list : []
   });
 
-  const { data, loading } = useQuery<GetRecordsResponse>(GET_RECORDS);
+  const { data, loading } =  useQuery<FindRecordsByUserIdResponse>(GET_RECORDS_BY_USERID, {
+    variables : {
+      userId : userId
+    }
+  });
   useEffect(() => {
     if (!loading && data) {
       dispatch({
-        type : 'INIT_DATA',
-        payload : data.allRecords.data
+        type : 'SET_LIST',
+        payload : data.findRecordsByUserId.data
       });
     }
   }, [loading]);
+
   return (
-    <MainTemplateStateContext.Provider value={state}>
-      <MainTemplateDispatchContext.Provider value={dispatch}>
+    <RecordStateContext.Provider value={state}>
+      <RecordDispatchContext.Provider value={dispatch}>
         {children}
-      </MainTemplateDispatchContext.Provider>
-    </MainTemplateStateContext.Provider>
+      </RecordDispatchContext.Provider>
+    </RecordStateContext.Provider>
   );
 }
 
