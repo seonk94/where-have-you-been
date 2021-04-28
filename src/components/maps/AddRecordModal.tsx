@@ -7,6 +7,7 @@ import useInputs from 'src/lib/hooks/useInputs';
 import { firebaseAuth } from 'src/lib/provider/AuthProvider';
 import { formatDate } from 'src/lib';
 import { useHistory } from 'react-router';
+import { useRecordDispatch } from 'src/lib/provider/RecordProvider';
 
 function getModalStyle() {
   const top = 50;
@@ -56,6 +57,7 @@ interface Props {
 }
 
 function AddRecordModal({ open, handleClose, coordinate }: Props) {
+  const dispatch = useRecordDispatch();
   const history = useHistory();
   const [modalStyle] = useState(getModalStyle);
   const [selectedDate, handleDateChange] = useState(new Date());
@@ -75,6 +77,14 @@ function AddRecordModal({ open, handleClose, coordinate }: Props) {
           date : formatDate(selectedDate),
           coordinate : coordinate,
           userId : user.uid
+        }
+      }).then(res => {
+        console.log(res);
+        if (res.data) {
+          dispatch({
+            type : 'PUSH_LIST',
+            payload : res.data.createRecord
+          });
         }
       });
     } else {

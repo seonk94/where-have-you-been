@@ -75,14 +75,7 @@ export const CREATE_RECORD = gql`
 `;
 
 export type CreateRecordResponse = {
-  createRecord: {
-    _id: number;
-    title: string;
-    content: string;
-    date: string;
-    coordinate: number[];
-    userId: number;
-  };
+  createRecord: Record;
 };
 
 export type FindRecordsByUserIdResponse = {
