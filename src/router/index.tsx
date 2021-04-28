@@ -5,7 +5,6 @@ import Loading from 'src/components/common/Loading';
 import { firebaseAuth } from 'src/lib/provider/AuthProvider';
 import board from 'src/pages/board';
 import login from 'src/pages/login';
-import main from 'src/pages/main';
 
 function AuthRoute({ user, component : Component, path, ...rest } : any) {
   const render = (props : any) => <Component {...props} />;
@@ -27,11 +26,6 @@ function Root() {
         <Switch>
           <AuthRoute exact
             path="/"
-            key="main"
-            user={user}
-            component={main} />
-          <AuthRoute exact
-            path="/board"
             key="board"
             user={user}
             component={board} />

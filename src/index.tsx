@@ -6,7 +6,6 @@ import { BrowserRouter } from 'react-router-dom';
 import { GlobalStyle } from './assets/styles/GlobalStyles';
 import { ApolloProvider } from '@apollo/client';
 import { client } from './client';
-import RecordProvider from './lib/provider/RecordProvider';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import AuthProvider from './lib/provider/AuthProvider';
