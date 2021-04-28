@@ -79,7 +79,6 @@ function AddRecordModal({ open, handleClose, coordinate }: Props) {
           userId : user.uid
         }
       }).then(res => {
-        console.log(res);
         if (res.data) {
           dispatch({
             type : 'PUSH_LIST',
