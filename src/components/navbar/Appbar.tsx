@@ -6,10 +6,7 @@ import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
   root : {
-    flexGrow : 1,
-    position : 'sticky',
-    top : 0,
-    zIndex : 1000
+    flexGrow : 1
   },
   appbar : {
     boxShadow : 'none'
@@ -27,7 +24,7 @@ function Appbar() {
 
   return (
     <div className={classes.root}>
-      <AppBar className={classes.appbar} position="sticky">
+      <AppBar className={classes.appbar} position="fixed">
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
             Map Marker
