@@ -28,6 +28,7 @@ const Date = styled.div`
 const Content = styled.div`
   font-size: 12px;
   font-weight: 400;
+  white-space: pre-line;
 `;
 
 
@@ -45,7 +46,7 @@ function RecordCardNonBoard({ record, isFirst = false } : Props) {
         </Typography>
       </Date>
       <Content>
-        <Typography variant="body1">
+        <Typography variant="body1" component="p">
           {record.content}
         </Typography>
       </Content>
@@ -53,4 +54,4 @@ function RecordCardNonBoard({ record, isFirst = false } : Props) {
   );
 }
 
-export default RecordCardNonBoard;
+export default React.memo(RecordCardNonBoard);

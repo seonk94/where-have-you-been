@@ -62,6 +62,7 @@ function AddRecordModal({ open, handleClose, coordinate }: Props) {
   const [modalStyle] = useState(getModalStyle);
   const [selectedDate, handleDateChange] = useState(new Date());
   const { user } = useContext(firebaseAuth);
+  const classes = useStyles();
   const [createRecord] = useMutation<CreateRecordResponse>(CREATE_RECORD);
   const [form, onChange] = useInputs({
     title : '',
@@ -87,13 +88,16 @@ function AddRecordModal({ open, handleClose, coordinate }: Props) {
         }
       });
     } else {
-      alert('로그인이 필요합니다.');
-      history.push('/login');
+      handleNonAuth();
     }
     handleClose();
   }
-  
-  const classes = useStyles();
+
+  function handleNonAuth() {
+    alert('로그인이 필요합니다.');
+    history.push('/login');
+  }
+
   return (
     <Modal open={open} onClose={handleClose}>
       <div style={modalStyle} className={classes.modal}>
@@ -103,7 +107,7 @@ function AddRecordModal({ open, handleClose, coordinate }: Props) {
             <Input value={form.title} onChange={onChange} name="title" className={classes.input} placeholder="title"/>
           </Box>
           <Box className={classes.inputBox}>
-            <Input value={form.content} onChange={onChange} name="content" className={classes.input} placeholder="description"/>
+            <Input multiline rows={4} value={form.content} onChange={onChange} name="content" className={classes.input} placeholder="description"/>
           </Box>
           <Box className={classes.inputBox}>
             <DatePicker
@@ -136,4 +140,4 @@ function AddRecordModal({ open, handleClose, coordinate }: Props) {
   );
 }
 
-export default AddRecordModal;
+export default React.memo(AddRecordModal);
