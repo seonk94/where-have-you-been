@@ -83,9 +83,14 @@ export type FindRecordsByUserIdResponse = {
     data: Record[]
   }
 }
+export type DeleteRecordResponse = {
+  deleteRecord: {
+    _id: string;
+  }
+}
 
 export const DELETE_RECORD = gql`
-  mutation DeleteRecord($id: String!) {
+  mutation DeleteRecord($id: ID!) {
     deleteRecord(id: $id) {
       _id
     }

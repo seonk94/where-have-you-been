@@ -6,7 +6,8 @@ import { FindRecordsByUserIdResponse, GetRecordsResponse, GET_RECORDS, GET_RECOR
 
 type SetList = { type: 'SET_LIST', payload: Record[] };
 type PushList = { type: 'PUSH_LIST', payload: Record };
-type Action = SetList | PushList;
+type DeleteList = { type: 'DELETE_LIST', payload: string };
+type Action = SetList | PushList | DeleteList;
 
 type RecordState = {
   list: Record[]
@@ -26,6 +27,11 @@ function reducer(state: RecordState, action: Action): RecordState {
     return {
       ...state,
       list : [...state.list, action.payload]
+    };
+  case 'DELETE_LIST':
+    return {
+      ...state,
+      list : state.list.filter(record => record._id !== action.payload)
     };
   default:
     throw new Error(`Unhandled action type`);
