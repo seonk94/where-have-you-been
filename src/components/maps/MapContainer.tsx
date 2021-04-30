@@ -4,6 +4,11 @@ import { MapContext } from 'src/lib/provider/MapProvider';
 import AddOverlay from './AddOverlay';
 
 const Container = styled.div`
+  position: sticky;
+  top: -164px;
+  z-index: 500 !important;
+`;
+const RatioContainer = styled.div`
   position: relative;
   width: 100%;
   padding-top: 100%;
@@ -33,8 +38,10 @@ function MapContainer() {
   
   return (
     <Container>
-      <MapElement id="map" />
-      <AddOverlay/>
+      <RatioContainer>
+        <MapElement id="map" />
+        <AddOverlay/>
+      </RatioContainer>
     </Container>
   );
 }
