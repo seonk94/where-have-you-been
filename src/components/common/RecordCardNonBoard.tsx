@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client';
-import { Button, Divider, IconButton, Menu, MenuItem, Typography } from '@material-ui/core';
+import { Button, Divider, IconButton, Menu, MenuItem, Typography, Paper } from '@material-ui/core';
 import { Delete } from '@material-ui/icons';
 import React from 'react';
 import { Spacer } from 'src/assets/styles/GlobalStyles';
@@ -14,7 +14,7 @@ interface Props {
 }
 
 
-const Container = styled.div<{ isFirst : boolean }>`
+const Container = styled(Paper)<{ isFirst : boolean }>`
   display: flex;
   flex-direction: column;
   padding: 8px;
@@ -68,7 +68,7 @@ function RecordCardNonBoard({ record, isFirst = false } : Props) {
     });
   };
   return (
-    <Container isFirst={isFirst}>
+    <Container isFirst={isFirst} elevation={0}>
       <TitleRow>
         <Typography variant="subtitle1">
           {record.title}

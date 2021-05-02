@@ -5,9 +5,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
-  root : {
-    flexGrow : 1
-  },
   appbar : {
     boxShadow : 'none'
   },
@@ -23,16 +20,14 @@ function Appbar() {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <AppBar className={classes.appbar} position="fixed">
-        <Toolbar>
-          <Typography variant="h6" className={classes.title}>
+    <AppBar className={classes.appbar} position="sticky">
+      <Toolbar>
+        <Typography variant="h6" className={classes.title}>
             Map Marker
-          </Typography>
-          <div className={classes.spacer}/>
-        </Toolbar>
-      </AppBar>
-    </div>
+        </Typography>
+        <div className={classes.spacer}/>
+      </Toolbar>
+    </AppBar>
   );
 }
 
