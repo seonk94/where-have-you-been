@@ -1,10 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { Suspense, useContext } from 'react';
+import React, { Suspense, useContext, useState } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import Loading from 'src/components/common/Loading';
 import { firebaseAuth } from 'src/lib/provider/AuthProvider';
 import main from 'src/pages/main';
 import login from 'src/pages/login';
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import { PaletteType } from '@material-ui/core';
+import ThemeProvider from 'src/lib/provider/ThemeProvider';
 
 function AuthRoute({ user, component : Component, path, ...rest } : any) {
   const render = (props : any) => <Component {...props} />;
@@ -19,7 +22,26 @@ function AuthRoute({ user, component : Component, path, ...rest } : any) {
 
 function Root() {
   const { user, loadingAuthState } = useContext(firebaseAuth);
-  return <div>
+  const [themeType, setThemeType] = useState<PaletteType>('dark');
+  const customTheme = createMuiTheme({
+    palette : {
+      type : themeType,
+      primary : {
+        main : '#546e7a'
+      },
+      secondary : {
+        main : '#004d40'
+      },
+      error : {
+        main : '#d50000'
+      }
+    },
+    typography : {
+      fontFamily : 'Noto Sans'
+    }
+  });
+
+  return <ThemeProvider>
     {
       loadingAuthState ? <Loading />
         : 
@@ -35,6 +57,6 @@ function Root() {
             component={login} />
         </Switch>
     }
-  </div>;
+  </ThemeProvider>;
 }
 export default Root;

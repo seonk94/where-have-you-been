@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/client';
-import { Box, Button, createStyles, Input, makeStyles, Modal, Theme } from '@material-ui/core';
-import { DatePicker } from '@material-ui/pickers';
+import { Box, Button, Paper, createStyles, Input, makeStyles, Modal, Theme } from '@material-ui/core';
+import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import React, { useContext, useState } from 'react';
 import { CreateRecordResponse, CREATE_RECORD } from 'src/lib/graphql/record';
 import useInputs from 'src/lib/hooks/useInputs';
@@ -8,6 +8,7 @@ import { firebaseAuth } from 'src/lib/provider/AuthProvider';
 import { formatDate } from 'src/lib';
 import { useHistory } from 'react-router';
 import { useRecordDispatch } from 'src/lib/provider/RecordProvider';
+import DateFnsUtils from '@date-io/date-fns';
 
 function getModalStyle() {
   const top = 50;
@@ -32,7 +33,6 @@ const useStyles = makeStyles((theme: Theme) =>
     modalCard : {
       display : 'flex',
       flexDirection : 'column',
-      backgroundColor : '#fff',
       padding : '16px',
       borderRadius : '8px',
       minWidth : '320px'
@@ -99,44 +99,47 @@ function AddRecordModal({ open, handleClose, coordinate }: Props) {
   }
 
   return (
-    <Modal open={open} onClose={handleClose}>
-      <div style={modalStyle} className={classes.modal}>
-        <div className={classes.modalCard}>
-            
-          <Box className={classes.inputBox}>
-            <Input value={form.title} onChange={onChange} name="title" className={classes.input} placeholder="title"/>
-          </Box>
-          <Box className={classes.inputBox}>
-            <Input multiline rows={4} value={form.content} onChange={onChange} name="content" className={classes.input} placeholder="description"/>
-          </Box>
-          <Box className={classes.inputBox}>
-            <DatePicker
-              autoOk
-              className={classes.input}
-              clearable
-              disableFuture
-              value={selectedDate}
-              onChange={(date) => handleDateChange(date as Date)}
-            />
-          </Box>
-          <div className={classes.spacer} />
-          <div className={classes.bottom}>
-            <div className={classes.spacer} />
-            <Box mx={1}>
-              <Button size="small" variant="contained" color="secondary" onClick={handleSave}>
-        저장
-              </Button>
-            </Box>
-            <Box mx={1}>
+    <MuiPickersUtilsProvider utils={DateFnsUtils}>
 
-              <Button size="small" variant="contained" color="default" onClick={handleClose} >
-        닫기
-              </Button>
+      <Modal open={open} onClose={handleClose}>
+        <Paper style={modalStyle} className={classes.modal}>
+          <Paper className={classes.modalCard}>
+            
+            <Box className={classes.inputBox}>
+              <Input value={form.title} onChange={onChange} name="title" className={classes.input} placeholder="title"/>
             </Box>
-          </div>
-        </div>
-      </div>
-    </Modal>
+            <Box className={classes.inputBox}>
+              <Input multiline rows={4} value={form.content} onChange={onChange} name="content" className={classes.input} placeholder="description"/>
+            </Box>
+            <Box className={classes.inputBox}>
+              <DatePicker
+                autoOk
+                className={classes.input}
+                clearable
+                disableFuture
+                value={selectedDate}
+                onChange={(date) => handleDateChange(date as Date)}
+              />
+            </Box>
+            <div className={classes.spacer} />
+            <div className={classes.bottom}>
+              <div className={classes.spacer} />
+              <Box mx={1}>
+                <Button size="small" variant="contained" color="secondary" onClick={handleSave}>
+        저장
+                </Button>
+              </Box>
+              <Box mx={1}>
+
+                <Button size="small" variant="contained" color="default" onClick={handleClose} >
+        닫기
+                </Button>
+              </Box>
+            </div>
+          </Paper>
+        </Paper>
+      </Modal>
+    </MuiPickersUtilsProvider>
   );
 }
 

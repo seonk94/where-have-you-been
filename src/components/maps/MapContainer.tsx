@@ -1,28 +1,30 @@
 import React, { useContext, useEffect } from 'react';
-import styled from 'styled-components';
 import { MapContext } from 'src/lib/provider/MapProvider';
 import AddOverlay from './AddOverlay';
+import { makeStyles, Paper, Box } from '@material-ui/core';
 
-const Container = styled.div`
-  position: sticky;
-  top: -164px;
-  z-index: 500 !important;
-`;
-const RatioContainer = styled.div`
-  position: relative;
-  width: 100%;
-  padding-top: 100%;
-`;
-
-const MapElement = styled.div`
-  width: 100%;
-  height: 100%;
-  position: absolute !important;
-  top: 0;
-  left: 0;
-`;
+const useStyles = makeStyles({
+  root : {
+    position : 'sticky',
+    top : '-164px',
+    zIndex : 500
+  },
+  ratio : {
+    position : 'relative',
+    width : '100%',
+    paddingTop : '100%'
+  },
+  map : {
+    width : '100%',
+    height : '100%',
+    position : 'absolute!important' as 'absolute',
+    top : 0,
+    left : 0
+  }
+});
 
 function MapContainer() {
+  const classes = useStyles();
   const { map, setMap } = useContext(MapContext);
 
   useEffect(() => {
@@ -37,12 +39,12 @@ function MapContainer() {
   }, []);
   
   return (
-    <Container>
-      <RatioContainer>
-        <MapElement id="map" />
+    <Paper className={classes.root} elevation={0} square>
+      <Box component="div" className={classes.ratio}>
+        <Box component="div" id="map" className={classes.map}/>
         <AddOverlay/>
-      </RatioContainer>
-    </Container>
+      </Box>
+    </Paper>
   );
 }
 

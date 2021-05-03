@@ -1,11 +1,10 @@
 import { useMutation } from '@apollo/client';
-import { Button, Divider, IconButton, Menu, MenuItem, Typography, Paper } from '@material-ui/core';
+import { Box, IconButton, Menu, MenuItem, Typography, Paper, makeStyles } from '@material-ui/core';
 import { Delete } from '@material-ui/icons';
 import React from 'react';
 import { Spacer } from 'src/assets/styles/GlobalStyles';
 import { DeleteRecordResponse, DELETE_RECORD, Record } from 'src/lib/graphql/record';
 import { useRecordDispatch } from 'src/lib/provider/RecordProvider';
-import styled from 'styled-components';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 interface Props {
@@ -13,32 +12,27 @@ interface Props {
   isFirst?: boolean;
 }
 
-
-const Container = styled(Paper)<{ isFirst : boolean }>`
-  display: flex;
-  flex-direction: column;
-  padding: 8px;
-  border-bottom: 1px solid #e6e6e6;
-  border-top: 1px solid ${props => props.isFirst ? '#e6e6e6' : '#fff'};
-`;
-const TitleRow = styled.div`
-  display: flex;
-  align-items: center;
-  flex-wrap: no-wrap;
-`;
-const Date = styled.div`
-  font-size: 10px;
-  font-weight: 400;
-  margin-bottom: 4px;
-`;
-const Content = styled.div`
-  font-size: 12px;
-  font-weight: 400;
-  white-space: pre-line;
-`;
+const useStyles = (isFirst: boolean) => makeStyles({
+  root : {
+    display : 'flex',
+    flexDirection : 'column',
+    padding : '8px',
+    borderBottom : '1px solid #e6e6e6',
+    borderTop : isFirst => isFirst ? 'none' : '1px solid #e6e6e6'
+  },
+  title : {
+    display : 'flex',
+    alignItems : 'center',
+    flexWrap : 'nowrap'
+  },
+  content : {
+    whiteSpace : 'pre-line'
+  }
+});
 
 
 function RecordCardNonBoard({ record, isFirst = false } : Props) {
+  const classes = useStyles(isFirst)();
   const dispatch = useRecordDispatch();
   const [deleteRecord] = useMutation<DeleteRecordResponse>(DELETE_RECORD);
 
@@ -68,8 +62,8 @@ function RecordCardNonBoard({ record, isFirst = false } : Props) {
     });
   };
   return (
-    <Container isFirst={isFirst} elevation={0}>
-      <TitleRow>
+    <Paper className={classes.root} elevation={0} square>
+      <Box className={classes.title}>
         <Typography variant="subtitle1">
           {record.title}
         </Typography>
@@ -86,18 +80,18 @@ function RecordCardNonBoard({ record, isFirst = false } : Props) {
         >
           <MenuItem onClick={handleDelete}>Delete</MenuItem>
         </Menu>
-      </TitleRow>
-      <Date>
+      </Box>
+      <Box>
         <Typography variant="caption">
           {record.date}
         </Typography>
-      </Date>
-      <Content>
+      </Box>
+      <Box className={classes.content}>
         <Typography variant="body1" component="p">
           {record.content}
         </Typography>
-      </Content>
-    </Container>
+      </Box>
+    </Paper>
   );
 }
 

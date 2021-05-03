@@ -1,23 +1,26 @@
-import { CircularProgress } from '@material-ui/core';
+import { CircularProgress, makeStyles, Paper } from '@material-ui/core';
 import React from 'react';
-import styled from 'styled-components';
 
-const LoadingContainer = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
+
+const useStyles = makeStyles({
+  root : {
+    position : 'absolute',
+    width : '100%',
+    height : '100%',
+    display : 'flex',
+    flexDirection : 'column',
+    alignItems : 'center',
+    justifyContent : 'center'
+  }
+});
 
 function Loading() {
+  const classes = useStyles();
   return (
-    <LoadingContainer>
+    <Paper className={classes.root} square elevation={0}>
       <h3>Loading</h3>
       <CircularProgress />
-    </LoadingContainer>
+    </Paper>
   );
 }
 
