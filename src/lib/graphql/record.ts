@@ -8,6 +8,7 @@ export type Record = {
     content: string;
     date: string;
     userId: string;
+    emoji: string;
 };
 
 export const GET_RECORDS = gql`
@@ -20,6 +21,7 @@ export const GET_RECORDS = gql`
         date
         userId
         coordinate
+        emoji
       }
     }
   }
@@ -42,6 +44,7 @@ export const GET_RECORDS_BY_USERID = gql`
         date
         userId
         coordinate
+        emoji
       }
     }
   }
@@ -53,6 +56,7 @@ export const CREATE_RECORD = gql`
     $content: String!,
     $date: String!,
     $userId: String!,
+    $emoji: String!,
     $coordinate: [Float]!
   ) {
     createRecord(
@@ -61,7 +65,8 @@ export const CREATE_RECORD = gql`
         content: $content,
         date: $date,
         userId: $userId,
-        coordinate: $coordinate
+        coordinate: $coordinate,
+        emoji: $emoji
       }
     ) {
       _id
@@ -70,6 +75,7 @@ export const CREATE_RECORD = gql`
       date
       coordinate
       userId
+      emoji
     }
   }
 `;

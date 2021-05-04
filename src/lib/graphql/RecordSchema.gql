@@ -3,6 +3,7 @@ type Record {
   content: String
   userId: String!
   title: String
+  emoji: String
   coordinate: [Float]
 }
 

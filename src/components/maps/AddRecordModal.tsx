@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client';
-import { Box, Button, Paper, createStyles, Input, makeStyles, Modal, Theme } from '@material-ui/core';
+import { Box, Button, Paper, createStyles, Input, makeStyles, Modal, Theme, ButtonGroup } from '@material-ui/core';
 import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import React, { useContext, useState } from 'react';
 import { CreateRecordResponse, CREATE_RECORD } from 'src/lib/graphql/record';
@@ -50,6 +50,16 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
+const emojiList = [
+  { emoji : '💖', label : 'heart' },
+  { emoji : '😊', label : 'smile' },
+  { emoji : '😎', label : 'sunglasses' },
+  { emoji : '👀', label : 'eye' },
+  { emoji : '🌹', label : 'flower' },
+  { emoji : '🎉', label : 'celebration' },
+  { emoji : '😢', label : 'sad' }
+];
+
 interface Props {
   open: boolean;
   coordinate: number[];
@@ -64,6 +74,7 @@ function AddRecordModal({ open, handleClose, coordinate }: Props) {
   const { user } = useContext(firebaseAuth);
   const classes = useStyles();
   const [createRecord] = useMutation<CreateRecordResponse>(CREATE_RECORD);
+  const [emoji, setEmoji] = useState('💖');
   const [form, onChange] = useInputs({
     title : '',
     content : ''
@@ -77,7 +88,8 @@ function AddRecordModal({ open, handleClose, coordinate }: Props) {
           content : form.content,
           date : formatDate(selectedDate),
           coordinate : coordinate,
-          userId : user.uid
+          userId : user.uid,
+          emoji : emoji
         }
       }).then(res => {
         if (res.data) {
@@ -97,6 +109,9 @@ function AddRecordModal({ open, handleClose, coordinate }: Props) {
     alert('로그인이 필요합니다.');
     history.push('/login');
   }
+  const handleEmoji = (emoji: string) => {
+    setEmoji(emoji);
+  };
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -120,6 +135,11 @@ function AddRecordModal({ open, handleClose, coordinate }: Props) {
                 value={selectedDate}
                 onChange={(date) => handleDateChange(date as Date)}
               />
+            </Box>
+            <Box className={classes.inputBox}>
+              <ButtonGroup disableElevation variant="contained" color="primary">
+                {emojiList.map(e => <Button color={e.emoji === emoji ? 'secondary' : 'primary'} key={e.label} onClick={() => handleEmoji(e.emoji)}><span role="img" aria-label={e.label}>{e.emoji}</span></Button>)}
+              </ButtonGroup>
             </Box>
             <div className={classes.spacer} />
             <div className={classes.bottom}>
