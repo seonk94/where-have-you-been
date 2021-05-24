@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client';
-import React, { useState, useReducer, createContext, Dispatch, useContext, useEffect } from 'react';
-import { FindRecordsByUserIdResponse, GetRecordsResponse, GET_RECORDS, GET_RECORDS_BY_USERID, Record } from 'src/lib/graphql/record';
+import React, { useReducer, createContext, Dispatch, useContext, useEffect } from 'react';
+import { FindRecordsByUserIdResponse, GET_RECORDS_BY_USERID, Record } from 'src/lib/graphql/record';
 
 
 

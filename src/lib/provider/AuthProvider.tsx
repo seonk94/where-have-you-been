@@ -1,4 +1,4 @@
-import React, { createContext, ReactChild, useContext, useEffect, useState } from 'react';
+import React, { ReactChild, useEffect, useState } from 'react';
 import { auth } from 'src/firebase';
 
 interface ContextType {

@@ -1,6 +1,5 @@
 import { useMutation } from '@apollo/client';
 import { Box, IconButton, Menu, MenuItem, Typography, Paper, makeStyles } from '@material-ui/core';
-import { Delete } from '@material-ui/icons';
 import React, { useContext } from 'react';
 import { Spacer } from 'src/assets/styles/GlobalStyles';
 import { DeleteRecordResponse, DELETE_RECORD, Record } from 'src/lib/graphql/record';

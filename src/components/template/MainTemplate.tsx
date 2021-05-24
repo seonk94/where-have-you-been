@@ -1,10 +1,9 @@
 import { Grid, makeStyles, Paper } from '@material-ui/core';
-import React, { useContext } from 'react';
+import React from 'react';
 import RecordCardNonBoard from 'src/components/common/RecordCardNonBoard';
 import MapContainer from 'src/components/maps/MapContainer';
 import Appbar from 'src/components/navbar/Appbar';
 import { useRecordState } from 'src/lib/provider/RecordProvider';
-import BoardMenu from '../common/BoardMenu';
 
 const useStyles = makeStyles({
   root : {
