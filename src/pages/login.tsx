@@ -36,7 +36,6 @@ const useStyles = makeStyles({
 
 function login() {
   const classes = useStyles();
-  const history = useHistory();
   
   useEffect(() => {
     let ui = firebaseui.auth.AuthUI.getInstance();
