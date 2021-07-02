@@ -42,7 +42,7 @@ function RecordCardNonBoard({ record, isFirst = false } : Props) {
   const classes = useStyles(isFirst)();
   const dispatch = useRecordDispatch();
   const [deleteRecord] = useMutation<DeleteRecordResponse>(DELETE_RECORD);
-  const { map, setMap } = useContext(MapContext);
+  const { map } = useContext(MapContext);
 
   const [menu, setMenu] = React.useState<null | HTMLElement>(null);
 
