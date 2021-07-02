@@ -9,22 +9,14 @@ type UseInputsAction = {
   value : string;
 }
 
-function reducer<T>(state : T, action : UseInputsAction | null) {
-  if (!action) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const initialState : any = {};
-    Object.keys(state).forEach(key => {
-      initialState[key] = '';
-    });
-    return initialState;
-  }
+function reducer<T>(state : T, action : UseInputsAction) {
   return {
     ...state,
     [action.name] : action.value
   };
 }
 
-export default function useInputs<T>(defaultValues : T) {
+export default function useInputs(defaultValues : DefaultValues) {
   const [state, dispatch] = useReducer(reducer, defaultValues);
   const onChange = useCallback((e : React.ChangeEvent<HTMLInputElement>) => {
     dispatch({
@@ -32,13 +24,10 @@ export default function useInputs<T>(defaultValues : T) {
       value : e.target.value
     });
   }, []);
-  const onReset = useCallback(() => {
-    dispatch(null);
-  }, []);
-  return [state, onChange, onReset, dispatch] as [
-    T,
+
+  return [state, onChange, dispatch] as [
+    typeof state,
     typeof onChange,
-    typeof onReset,
     typeof dispatch
   ];
 }
