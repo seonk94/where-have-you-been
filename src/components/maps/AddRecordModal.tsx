@@ -74,10 +74,10 @@ function AddRecordModal({ open, handleClose, coordinate }: Props) {
   const { user } = useContext(firebaseAuth);
   const classes = useStyles();
   const [createRecord] = useMutation<CreateRecordResponse>(CREATE_RECORD);
-  const [emoji, setEmoji] = useState('💖');
-  const [form, onChange] = useInputs({
+  const [form, onChange, formDispatch] = useInputs({
     title : '',
-    content : ''
+    content : '',
+    emoji : '💖'
   });
 
   function handleSave() {
@@ -89,7 +89,7 @@ function AddRecordModal({ open, handleClose, coordinate }: Props) {
           date : formatDate(selectedDate),
           coordinate : coordinate,
           userId : user.uid,
-          emoji : emoji
+          emoji : form.emoji
         }
       }).then(res => {
         if (res.data) {
@@ -110,7 +110,10 @@ function AddRecordModal({ open, handleClose, coordinate }: Props) {
     history.push('/login');
   }
   const handleEmoji = (emoji: string) => {
-    setEmoji(emoji);
+    formDispatch({
+      name : 'emoji',
+      value : emoji
+    });
   };
 
   return (
@@ -138,7 +141,7 @@ function AddRecordModal({ open, handleClose, coordinate }: Props) {
             </Box>
             <Box className={classes.inputBox}>
               <ButtonGroup disableElevation variant="contained" color="primary">
-                {emojiList.map(e => <Button color={e.emoji === emoji ? 'secondary' : 'primary'} key={e.label} onClick={() => handleEmoji(e.emoji)}><span role="img" aria-label={e.label}>{e.emoji}</span></Button>)}
+                {emojiList.map(e => <Button color={e.emoji === form.emoji ? 'secondary' : 'primary'} key={e.label} onClick={() => handleEmoji(e.emoji)}><span role="img" aria-label={e.label}>{e.emoji}</span></Button>)}
               </ButtonGroup>
             </Box>
             <div className={classes.spacer} />
