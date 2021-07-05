@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/client';
 import { Box, IconButton, Menu, MenuItem, Typography, Paper, makeStyles } from '@material-ui/core';
-import React, { useContext } from 'react';
+import React, { useCallback, useContext } from 'react';
 import { Spacer } from 'src/assets/styles/GlobalStyles';
 import { DeleteRecordResponse, DELETE_RECORD, Record } from 'src/lib/graphql/record';
 import { useRecordDispatch } from 'src/lib/provider/RecordProvider';
@@ -46,36 +46,33 @@ function RecordCardNonBoard({ record, isFirst = false } : Props) {
 
   const [menu, setMenu] = React.useState<null | HTMLElement>(null);
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
     setMenu(event.currentTarget);
-  };
+  }, [setMenu]);
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setMenu(null);
-  };
+  }, [setMenu]);
 
 
-  const handleDelete = () => {
-    deleteRecord({
+  const handleDelete = useCallback(async () => {
+    await deleteRecord({
       variables : {
         id : record._id
       }
-    }).then(res => {
-      if (res.data) {
-        dispatch({
-          type : 'DELETE_LIST',
-          payload : res.data.deleteRecord._id
-        });
-      }
     });
-  };
+    dispatch({
+      type : 'DELETE_LIST',
+      payload : record._id
+    });
+  }, [dispatch, record._id]);
 
-  const handleClickTitle = () => {
-    if (map) {
-      const [x, y] = record.coordinate;
-      map.setCenter(new naver.maps.LatLng(x, y));
-    }
-  };
+  const handleClickTitle = useCallback(() => {
+    if (!map) return;
+    const [x, y] = record.coordinate;
+    map.setCenter(new naver.maps.LatLng(x, y));
+  }, [map, record.coordinate]);
+
   return (
     <Paper className={classes.root} elevation={0} square>
       <Box className={classes.titleRow}>
